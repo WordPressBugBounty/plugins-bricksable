@@ -2,8 +2,8 @@
 Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
-Tested up to: 6.6.1
-Stable tag: 1.6.59
+Tested up to: 6.6.2
+Stable tag: 1.6.60
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,11 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.60 (2024-10-23) =
+* Fix: Before After Image Element Dynamic Image not rendering properly when using repeater field. 
+* Add: Custom Tag Option to Multi Heading Element. 
+* Add: allowed_html_tags filter to Multi Heading Element for security purposes.
+
 = 1.6.59 (2024-08-13) =
 * Fix: Animated SVG Element not working in multiple element in a page. 
 

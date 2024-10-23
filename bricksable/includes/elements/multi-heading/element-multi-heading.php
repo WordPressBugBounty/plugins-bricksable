@@ -9,6 +9,7 @@ class Bricksable_Multi_Heading extends Element {
 	public $category = 'bricksable';
 	public $name     = 'ba-multi-heading';
 	public $icon     = 'ti-uppercase';
+	public $tag      = 'h3';
 
 	public function get_label() {
 		return esc_html__( 'Multi Heading', 'bricksable' );
@@ -147,18 +148,31 @@ class Bricksable_Multi_Heading extends Element {
 			'label'       => esc_html__( 'Tag', 'bricksable' ),
 			'type'        => 'select',
 			'options'     => array(
-				'h1'  => esc_html__( 'Heading 1 (h1)', 'bricksable' ),
-				'h2'  => esc_html__( 'Heading 2 (h2)', 'bricksable' ),
-				'h3'  => esc_html__( 'Heading 3 (h3)', 'bricksable' ),
-				'h4'  => esc_html__( 'Heading 4 (h4)', 'bricksable' ),
-				'h5'  => esc_html__( 'Heading 5 (h5)', 'bricksable' ),
-				'h6'  => esc_html__( 'Heading 6 (h6)', 'bricksable' ),
-				'div' => esc_html__( 'Division (div)', 'bricksable' ),
+				'h1'     => esc_html__( 'Heading 1 (h1)', 'bricksable' ),
+				'h2'     => esc_html__( 'Heading 2 (h2)', 'bricksable' ),
+				'h3'     => esc_html__( 'Heading 3 (h3)', 'bricksable' ),
+				'h4'     => esc_html__( 'Heading 4 (h4)', 'bricksable' ),
+				'h5'     => esc_html__( 'Heading 5 (h5)', 'bricksable' ),
+				'h6'     => esc_html__( 'Heading 6 (h6)', 'bricksable' ),
+				'div'    => esc_html__( 'Division (div)', 'bricksable' ),
+				'custom' => esc_html__( 'Custom', 'bricksable' ),
 			),
 			'inline'      => true,
 			'clearable'   => false,
 			'pasteStyles' => false,
 			'default'     => 'h3',
+			'placeholder' => ! empty( $this->theme_styles['tag'] ) ? $this->theme_styles['tag'] : 'h3',
+		);
+
+		$this->controls['customTag'] = array(
+			'tab'         => 'content',
+			'group'       => 'content',
+			'label'       => esc_html__( 'Custom tag', 'bricksable' ),
+			'info'        => esc_html__( 'Without attributes', 'bricksable' ),
+			'type'        => 'text',
+			'inline'      => true,
+			'placeholder' => 'span',
+			'required'    => array( 'tag', '=', 'custom' ),
 		);
 
 		$this->controls['style'] = array(
@@ -297,7 +311,7 @@ class Bricksable_Multi_Heading extends Element {
 		if ( version_compare( BRICKS_VERSION, '1.3', '>' ) ) {
 			$output .= "<div {$this->render_attributes( '_root' )}>";
 		}
-		$output .= '<' . $this->render_attributes( 'heading' ) . '>';
+		$output .= "<{$this->tag} {$this->render_attributes( 'heading' )}>";
 
 		if ( isset( $settings['link'] ) ) {
 			$output .= '<a ' . $this->render_attributes( 'a' ) . '>';
@@ -336,7 +350,7 @@ class Bricksable_Multi_Heading extends Element {
 			$output .= '</a>';
 		}
 
-		$output .= '</' . $tag . '>';
+		$output .= "</{$this->tag}>";
 
 		if ( version_compare( BRICKS_VERSION, '1.3', '>' ) ) {
 			$output .= '</div>';
@@ -344,6 +358,5 @@ class Bricksable_Multi_Heading extends Element {
 
 		//phpcs:ignore
 		echo $output;
-
 	}
 }

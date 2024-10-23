@@ -565,17 +565,17 @@ class Bricksable_Before_After_Image extends \Bricks\Element {
 		// Check: Image with ID doesn't exist.
 		if ( ! isset( $after_settings['external'] ) && ! $after_image_url ) {
 			/* translators: After Image ID*/
-			return $this->render_element_placeholder( array( 'title' => sprintf( esc_html__( 'Image ID (%s) no longer exist. Please select another image.', 'bricksable' ), $before_image_id ) ) );
+			return $this->render_element_placeholder( array( 'title' => sprintf( esc_html__( 'Image ID (%s) no longer exist. Please select another image.', 'bricksable' ), $after_image_id ) ) );
 		}
 
-		$before_after_images_existed = ! empty( $settings['after_image']['url'] ) && ! empty( $settings['before_image']['url'] ) ? true : false;
-		$before_after_image_options  = array(
+		// $before_after_images_existed = ! empty( $settings['after_image']['url'] ) && ! empty( $settings['before_image']['url'] ) ? true : false;
+		$before_after_image_options = array(
 			'addCircle'     => isset( $settings['add_circle'] ) ? true : false,
 			'verticalMode'  => isset( $settings['vertical_mode'] ) ? true : false,
 			'onHover'       => $labels_on_hover,
 			'hoverStart'    => 'mouse_hover' === $settings['slider_move_type'] ? true : false,
 			'startingPoint' => isset( $settings['starting_point'] ) ? intval( $settings['starting_point'] ) : 50,
-			'imageExisted'  => $before_after_images_existed,
+			// 'imageExisted'  => $before_after_images_existed,
 		);
 
 		$this->set_attribute( 'image-wrapper', 'class', $image_wrapper_classes );
