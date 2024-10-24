@@ -1696,7 +1696,7 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 
 		$this->set_attribute( 'ba-flipbox-front', 'class', array( 'ba-flipbox-front', 'ba-flipbox-container' ) );
 		$this->set_attribute( 'ba-flipbox-front-content', 'class', array( 'ba-flipbox-content-wrapper' ) );
-		$front_heading_tag     = isset( $settings['front_heading_tag'] ) ? esc_html( $settings['front_heading_tag'] ) : 'h3';
+		$front_heading_tag     = isset( $settings['front_heading_tag'] ) ? Bricks\Helpers::sanitize_html_tag( $settings['front_heading_tag'], 'h3' ) : 'h3';
 		$front_heading_classes = array(
 			'bricks-heading',
 			'bricks-heading-' . $front_heading_tag,
@@ -1812,7 +1812,7 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 
 		$this->set_attribute( 'ba-flipbox-back', 'class', array( 'ba-flipbox-back', 'ba-flipbox-container' ) );
 		$this->set_attribute( 'ba-flipbox-back-content', 'class', array( 'ba-flipbox-content-wrapper' ) );
-		$back_heading_tag = isset( $settings['back_heading_tag'] ) ? esc_html( $settings['back_heading_tag'] ) : 'h3';
+		$back_heading_tag = isset( $settings['back_heading_tag'] ) ? Bricks\Helpers::sanitize_html_tag( $settings['back_heading_tag'], 'h3' ) : 'h3';
 		$heading_classes  = array(
 			'bricks-heading',
 			'bricks-heading-' . $back_heading_tag,

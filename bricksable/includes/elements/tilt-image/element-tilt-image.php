@@ -582,7 +582,7 @@ class Bricksable_Tilt_Image extends \Bricks\Element {
 				return $this->render_element_placeholder(
 					array(
 						'icon-class' => 'ti-image',
-						'text'       => esc_html__( 'No image selected.', 'bricksable' ),
+						'title'       => esc_html__( 'No image selected.', 'bricksable' ),
 					)
 				);
 				//phpcs:ignore
@@ -595,7 +595,7 @@ class Bricksable_Tilt_Image extends \Bricks\Element {
 					array(
 						'icon-class' => 'ti-image',
 						/* translators: 1: Image ID */
-						'text'       => sprintf( esc_html__( 'Image ID (%s) no longer exist. Please select another image.', 'bricksable' ), $settings['image']['id'] ),
+						'title'       => sprintf( esc_html__( 'Image ID (%s) no longer exist. Please select another image.', 'bricksable' ), $settings['image']['id'] ),
 					)
 				);
 			}
@@ -705,7 +705,7 @@ class Bricksable_Tilt_Image extends \Bricks\Element {
 		}
 
 		if ( 'none' !== $show_title || 'none' !== $show_caption || isset( $settings['overlay_icon']['icon'] ) ) {
-			$overlay_title_tag     = isset( $settings['overlay_title_tag'] ) ? esc_html( $settings['overlay_title_tag'] ) : 'h3';
+			$overlay_title_tag     = isset( $settings['overlay_title_tag'] ) ? Bricks\Helpers::sanitize_html_tag( $settings['overlay_title_tag'], 'h3' ) : 'h3';
 			$overlay_title_classes = array(
 				'ba-tilt-image-overlay-title',
 				'bricks-heading',

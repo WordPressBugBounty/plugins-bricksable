@@ -12,6 +12,7 @@ class Bricksable_Card extends \Bricks\Element {
 	public $css_selector = '';
 	public $scripts      = array();
 	public $nestable     = true; // true || @since 1.5.
+	public $tag          = 'h3';
 
 	// Methods: Builder-specific.
 	public function get_label() {

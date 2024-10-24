@@ -494,8 +494,6 @@ class Bricksable_Text_Notation extends \Bricks\Element {
 	public function render() {
 		$settings = $this->settings;
 
-		$notation_tag = isset( $settings['notation_tag'] ) ? esc_html( $settings['notation_tag'] ) : 'h3';
-
 		if ( ! empty( $settings['notation_color']['rgb'] ) ) {
 			$notation_color = $settings['notation_color']['rgb'];
 		} elseif ( ! empty( $settings['notation_color']['hex'] ) ) {
@@ -541,7 +539,8 @@ class Bricksable_Text_Notation extends \Bricks\Element {
 			'brackets'          => $notation_bracket,
 		);
 
-		$wrapper_tag = isset( $settings['wrapper_tag'] ) ? esc_html( $settings['wrapper_tag'] ) : 'p';
+		$wrapper_tag  = isset( $settings['wrapper_tag'] ) ? Bricks\Helpers::sanitize_html_tag( $settings['wrapper_tag'], 'p' ) : 'p';
+		$notation_tag = isset( $settings['notation_tag'] ) ? Bricks\Helpers::sanitize_html_tag( $settings['notation_tag'], 'h3' ) : 'h3';
 		$this->set_attribute( 'notation_wrapper', $wrapper_tag );
 		$this->set_attribute( 'notation_wrapper', 'class', 'ba-text-notation-wrapper-tag' );
 		$this->set_attribute( 'notation_text', $notation_tag );
