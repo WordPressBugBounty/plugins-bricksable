@@ -104,6 +104,7 @@ class Bricksable_Embed_Google_Maps extends Element {
 
 		$google_api_key = esc_html( \Bricks\Database::get_setting( 'apiKeyGoogleMaps' ) );
 		$api_type       = $settings['apiType'];
+		$address        = $this->render_dynamic_data( $settings['address'] );
 
 		$api_or_not = '';
 		switch ( $api_type ) {
@@ -119,7 +120,7 @@ class Bricksable_Embed_Google_Maps extends Element {
 		}
 		$google_settings_params = sprintf(
 			$api_or_not,
-			rawurlencode( $settings['address'] ),
+			rawurlencode( $address ),
 			esc_attr( $settings['zoom'] ),
 			esc_attr( get_locale() ),
 			$google_api_key
