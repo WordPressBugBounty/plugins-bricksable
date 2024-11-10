@@ -1885,11 +1885,19 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 				$back_icon_box_html .= '<div ' . $this->render_attributes( 'back_icon_image' ) . '>';
 				$close_back_tag      = false;
 
+				if ( isset( $settings['back_link'] ) ) {
+					$back_icon_box_html .= '<a ' . $this->render_attributes( 'a' ) . '>';
+				}
+
 				// Lazy load atts set via 'wp_get_attachment_image_attributes' filter.
 				if ( isset( $settings['back_icon_image']['id'] ) ) {
 					$back_icon_box_html .= wp_get_attachment_image( $settings['back_icon_image']['id'], $settings['back_icon_image']['size'], false, $image_atts );
 				} elseif ( ! empty( $settings['back_icon_image']['url'] ) ) {
 					$back_icon_box_html .= '<img src="' . $settings['back_icon_image']['url'] . '">';
+				}
+
+				if ( isset( $settings['back_link'] ) ) {
+					$back_icon_box_html .= '</a>';
 				}
 
 				if ( $close_back_tag ) {

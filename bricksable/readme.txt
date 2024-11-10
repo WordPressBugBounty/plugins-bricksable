@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.6.2
-Stable tag: 1.6.63
+Stable tag: 1.6.64
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,9 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.64 (2024-11-10) =
+* Fix: Link not working for icon image in Flipbox Element (Back).
+
 = 1.6.63 (2024-11-10) =
 * Fix: Dynamic address data not working in Emebd Google Maps Element.
 
