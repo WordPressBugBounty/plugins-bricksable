@@ -219,7 +219,10 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'inline'      => true,
 			'default'     => 'element',
 			'placeholder' => esc_html__( 'Element', 'bricksable' ),
-			'required'    => array( 'startOpen', '=', '' ),
+			'required'    => array(
+				array( 'scrollBacktoTop', '!=', '' ),
+				array( 'startOpen', '=', '' ),
+			),
 		);
 		$this->controls['scrollBacktoTopCssId']  = array(
 			'tab'            => 'content',
