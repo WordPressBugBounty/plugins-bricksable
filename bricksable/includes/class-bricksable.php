@@ -143,7 +143,7 @@ class Bricksable {
 		}
 
 		// Handle localisation.
-		$this->load_plugin_textdomain();
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 0 );
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
 	} // End __construct ()
 
