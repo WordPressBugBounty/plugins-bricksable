@@ -258,7 +258,20 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'type'        => 'number',
 			'default'     => '100',
 			'placeholder' => esc_html__( '100', 'bricksable' ),
+			'units'       => array(
+				'px' => array(
+					'min'  => 0,
+					'max'  => 1000,
+					'step' => 10,
+				),
+			),
 			'description' => esc_html__( 'The maximum height of the component in it’s collapsed state.', 'bricksable' ),
+			'css'         => array(
+				array(
+					'property' => 'max-height',
+					'selector' => '&:not(.bricks-draggable-item)>.ba-read-more-wrapper',
+				),
+			),
 		);
 
 		$this->controls['heightMargin'] = array(
@@ -577,6 +590,9 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'bricksableReadMoreData',
 			array(
 				'ReadMoreInstances' => array(),
+				'breakPoints'       => array(
+					'asd' => \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_portrait' )['width'],
+				),
 			)
 		);
 	}
@@ -587,22 +603,32 @@ class Bricksable_Read_More extends \Bricks\Element {
 		$read_more_icon = isset( $settings['readMoreIcon'] ) && isset( $settings['readMoreIcon']['icon'] ) ? true : false;
 		$less_more_icon = isset( $settings['lessIcon'] ) && isset( $settings['lessIcon']['icon'] ) ? true : false;
 
-		$readmore_options = array(
-			'speed'                 => isset( $settings['speed'] ) ? intval( $settings['speed'] ) : 100,
-			'collapsedHeight'       => isset( $settings['collapsedHeight'] ) ? intval( $settings['collapsedHeight'] ) : 100,
-			'heightMargin'          => isset( $settings['heightMargin'] ) ? intval( $settings['heightMargin'] ) : 16,
-			'moreLink'              => isset( $settings['moreText'] ) ? esc_attr( $settings['moreText'] ) : esc_attr( 'Read more' ),
-			'lessText'              => isset( $settings['lessText'] ) ? esc_attr( $settings['lessText'] ) : esc_attr( 'Close' ),
-			'startOpen'             => isset( $settings['startOpen'] ) ? boolval( $settings['startOpen'] ) : false,
-			'scrollBacktoTop'       => isset( $settings['scrollBacktoTop'] ) ? boolval( $settings['scrollBacktoTop'] ) : false,
-			'scrollBacktoTopTarget' => isset( $settings['scrollBacktoTopTarget'] ) ? esc_attr( $settings['scrollBacktoTopTarget'] ) : esc_attr( 'element' ),
-			'scrollBacktoTopCssId'  => isset( $settings['scrollBacktoTopCssId'] ) ? esc_attr( $settings['scrollBacktoTopCssId'] ) : '',
-			'readMoreIcon'          => isset( $settings['readMoreIcon'] ) && ( true === $use_icon && true === $read_more_icon ) ? esc_attr( $settings['readMoreIcon']['icon'] ) : '',
-			'readMoreIconSVG'       => isset( $settings['readMoreIcon'] ) && ( true === $use_icon && false === $read_more_icon ) ? self::render_icon( $settings['readMoreIcon'] ) : '',
-			'lessIcon'              => isset( $settings['lessIcon'] ) && ( true === $use_icon && true === $less_more_icon ) ? esc_attr( $settings['lessIcon']['icon'] ) : '',
-			'lessIconSVG'           => isset( $settings['lessIcon'] ) && ( true === $use_icon && false === $less_more_icon ) ? self::render_icon( $settings['lessIcon'], '' ) : '',
-		);
+		$collapsed_height                  = isset( $settings['collapsedHeight'] ) ? intval( $settings['collapsedHeight'] ) : 100;
+		$collapsed_height_tablet_portrait  = isset( $settings['collapsedHeight:tablet_portrait'] ) ? intval( $settings['collapsedHeight:tablet_portrait'] ) : intval( $collapsedHeight );
+		$collapsed_height_mobile_landscape = isset( $settings['collapsedHeight:mobile_landscape'] ) ? intval( $settings['collapsedHeight:mobile_landscape'] ) : intval( $collapsed_height_tablet_portrait );
+		$collapsed_height_mobile_portrait  = isset( $settings['collapsedHeight:mobile_portrait'] ) ? intval( $settings['collapsedHeight:mobile_portrait'] ) : intval( $collapsed_height_mobile_landScape );
 
+		$readmore_options = array(
+			'speed'                          => isset( $settings['speed'] ) ? intval( $settings['speed'] ) : 100,
+			'collapsedHeight'                => isset( $settings['collapsedHeight'] ) ? intval( $settings['collapsedHeight'] ) : 100,
+			'collapsedHeightTabletPortrait'  => isset( $settings['collapsedHeight:tablet_portrait'] ) ? intval( $settings['collapsedHeight:tablet_portrait'] ) : intval( $collapsed_height ),
+			'collapsedHeightMobileLandScape' => isset( $settings['collapsedHeight:mobile_landscape'] ) ? intval( $settings['collapsedHeight:mobile_landscape'] ) : intval( $collapsed_height_tablet_portrait ),
+			'collapsedHeightMobilePortrait'  => isset( $settings['collapsedHeight:mobile_portrait'] ) ? intval( $settings['collapsedHeight:mobile_portrait'] ) : intval( $collapsed_height_mobile_landscape ),
+			'heightMargin'                   => isset( $settings['heightMargin'] ) ? intval( $settings['heightMargin'] ) : 16,
+			'moreLink'                       => isset( $settings['moreText'] ) ? esc_attr( $settings['moreText'] ) : esc_attr( 'Read more' ),
+			'lessText'                       => isset( $settings['lessText'] ) ? esc_attr( $settings['lessText'] ) : esc_attr( 'Close' ),
+			'startOpen'                      => isset( $settings['startOpen'] ) ? boolval( $settings['startOpen'] ) : false,
+			'scrollBacktoTop'                => isset( $settings['scrollBacktoTop'] ) ? boolval( $settings['scrollBacktoTop'] ) : false,
+			'scrollBacktoTopTarget'          => isset( $settings['scrollBacktoTopTarget'] ) ? esc_attr( $settings['scrollBacktoTopTarget'] ) : esc_attr( 'element' ),
+			'scrollBacktoTopCssId'           => isset( $settings['scrollBacktoTopCssId'] ) ? esc_attr( $settings['scrollBacktoTopCssId'] ) : '',
+			'readMoreIcon'                   => isset( $settings['readMoreIcon'] ) && ( true === $use_icon && true === $read_more_icon ) ? esc_attr( $settings['readMoreIcon']['icon'] ) : '',
+			'readMoreIconSVG'                => isset( $settings['readMoreIcon'] ) && ( true === $use_icon && false === $read_more_icon ) ? self::render_icon( $settings['readMoreIcon'] ) : '',
+			'lessIcon'                       => isset( $settings['lessIcon'] ) && ( true === $use_icon && true === $less_more_icon ) ? esc_attr( $settings['lessIcon']['icon'] ) : '',
+			'lessIconSVG'                    => isset( $settings['lessIcon'] ) && ( true === $use_icon && false === $less_more_icon ) ? self::render_icon( $settings['lessIcon'], '' ) : '',
+			'mobile_portrait'                => null !== \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_portrait' ) ? \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_portrait' )['width'] : 478,
+			'tablet_portrait'                => null !== \Bricks\Breakpoints::get_breakpoint_by( 'key', 'tablet_portrait' ) ? \Bricks\Breakpoints::get_breakpoint_by( 'key', 'tablet_portrait' )['width'] : 991,
+			'mobile_landscape'               => null !== \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_landscape' ) ? \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_landscape' )['width'] : 767,
+		);
 		$this->set_attribute( '_root', 'data-ba-bricks-read-more-options', wp_json_encode( $readmore_options ) );
 
 		$output = "<div {$this->render_attributes( '_root' )}>";
@@ -636,12 +662,39 @@ class Bricksable_Read_More extends \Bricks\Element {
 					$output .= \Bricks\Frontend::render_children( $this );
 			}
 		}
-
+		// $this->get_breakpoints();
 		// Wrapper.
 		$output .= '</div>';
 		// Root.
 		$output .= '</div>';
 		//phpcs:ignore
 		echo $output;
+	}
+
+	public function get_breakpoints( $settings = array(), $breakpoint = '' ) {
+		$settings        = $this->settings;
+		$element_id      = $this->get_element_attribute_id();
+		$breakpoints     = array();
+		$card_inline_css = '';
+
+		foreach ( \Bricks\Breakpoints::$breakpoints as $key => $breakpoint ) {
+			$breakpoint_width = ! empty( $breakpoint['width'] ) ? $breakpoint['width'] : false;
+			$breakpoints[]    = $setting_value;
+			if ( ! empty( $breakpoints ) ) {
+				$card_inline_css .= "@media (max-width: {$breakpoint_width}px) {\n";
+				if ( $settings['collapsedHeight'] ) {
+					$card_inline_css .= "#{$element_id} .ba-read-more-wrapper {\n";
+					switch ( $settings[ $setting_key ] ) {
+						default:
+							$card_inline_css .= 'height:' . $settings['collapsedHeight'] . '!important';
+					}
+					$card_inline_css .= '}';
+				}
+				$card_inline_css .= '}';
+			}
+		}
+		// $card_inline_css .= "<style>$template_settings_inline_css</style>";
+
+		// return $card_inline_css;
 	}
 }
