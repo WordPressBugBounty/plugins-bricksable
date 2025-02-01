@@ -269,7 +269,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'css'         => array(
 				array(
 					'property' => 'max-height',
-					'selector' => '&:not(.bricks-draggable-item)>.ba-read-more-wrapper',
+					'selector' => '.ba-read-more-wrapper',
 				),
 			),
 		);
@@ -590,9 +590,6 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'bricksableReadMoreData',
 			array(
 				'ReadMoreInstances' => array(),
-				'breakPoints'       => array(
-					'asd' => \Bricks\Breakpoints::get_breakpoint_by( 'key', 'mobile_portrait' )['width'],
-				),
 			)
 		);
 	}
@@ -604,9 +601,9 @@ class Bricksable_Read_More extends \Bricks\Element {
 		$less_more_icon = isset( $settings['lessIcon'] ) && isset( $settings['lessIcon']['icon'] ) ? true : false;
 
 		$collapsed_height                  = isset( $settings['collapsedHeight'] ) ? intval( $settings['collapsedHeight'] ) : 100;
-		$collapsed_height_tablet_portrait  = isset( $settings['collapsedHeight:tablet_portrait'] ) ? intval( $settings['collapsedHeight:tablet_portrait'] ) : intval( $collapsedHeight );
+		$collapsed_height_tablet_portrait  = isset( $settings['collapsedHeight:tablet_portrait'] ) ? intval( $settings['collapsedHeight:tablet_portrait'] ) : intval( $collapsed_height );
 		$collapsed_height_mobile_landscape = isset( $settings['collapsedHeight:mobile_landscape'] ) ? intval( $settings['collapsedHeight:mobile_landscape'] ) : intval( $collapsed_height_tablet_portrait );
-		$collapsed_height_mobile_portrait  = isset( $settings['collapsedHeight:mobile_portrait'] ) ? intval( $settings['collapsedHeight:mobile_portrait'] ) : intval( $collapsed_height_mobile_landScape );
+		$collapsed_height_mobile_portrait  = isset( $settings['collapsedHeight:mobile_portrait'] ) ? intval( $settings['collapsedHeight:mobile_portrait'] ) : intval( $collapsed_height_mobile_landscape );
 
 		$readmore_options = array(
 			'speed'                          => isset( $settings['speed'] ) ? intval( $settings['speed'] ) : 100,

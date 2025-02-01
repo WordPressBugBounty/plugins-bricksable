@@ -214,19 +214,18 @@ class Bricksable_Multi_Heading extends Element {
 			'required' => array( 'heading_display', '=', 'row' ),
 		);
 		$this->controls['heading_AlignItems']   = array(
-			'tab'      => 'style',
-			'group'    => 'style',
-			'label'    => esc_html__( 'Horizontal', 'bricksable' ),
-			'type'     => 'align-items',
-			'exclude'  => array( 'stretch' ),
-			'css'      => array(
+			'tab'     => 'style',
+			'group'   => 'style',
+			'label'   => esc_html__( 'Horizontal', 'bricksable' ),
+			'type'    => 'align-items',
+			'exclude' => array( 'stretch' ),
+			'css'     => array(
 				array(
 					'property' => 'align-items',
 					'selector' => '.bricks-heading',
 				),
 			),
-			'inline'   => true,
-			'required' => array( 'heading_display', '=', 'column' ),
+			'inline'  => true,
 		);
 
 		$this->controls['gap'] = array(
