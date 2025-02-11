@@ -9,6 +9,7 @@ class Bricksable_Random_Image extends \Bricks\Element {
 	public $category          = 'bricksable';
 	public $name              = 'random-image';
 	public $icon              = 'ti-image';
+	public $custom_attributes = false;
 
 	public function get_label() {
 		return esc_html__( 'Random Image', 'bricksable' );
@@ -228,19 +229,20 @@ class Bricksable_Random_Image extends \Bricks\Element {
 		$element_global_classes = ! empty( $settings['_cssGlobalClasses'] ) ? $settings['_cssGlobalClasses'] : false;
 
 		if ( ! $has_html_tag && is_array( $element_global_classes ) ) {
-			$all_global_classes = Database::$global_data['globalClasses'];
+			$all_global_classes = \Bricks\Database::$global_data['globalClasses'];
 
-			foreach ( $element_global_classes as $element_global_class ) {
-				$index        = array_search( $element_global_class, array_column( $all_global_classes, 'id' ), true );
-				$global_class = ! empty( $all_global_classes[ $index ] ) ? $all_global_classes[ $index ] : false;
+			if ( is_array( $all_global_classes ) ) {
+				foreach ( $element_global_classes as $element_global_class ) {
+					$index        = array_search( $element_global_class, array_column( $all_global_classes, 'id' ) );
+					$global_class = ! empty( $all_global_classes[ $index ] ) ? $all_global_classes[ $index ] : false;
 
-				// Global class has 'gradient' setting: Add HTML tag to Image element to make ::before work.
-				if ( $global_class && strpos( wp_json_encode( $global_class ), '_gradient' ) ) {
-					$has_html_tag = true;
+					// Global class has 'gradient' setting: Add HTML tag to Image element to make ::before work
+					if ( $global_class && strpos( json_encode( $global_class ), '_gradient' ) ) {
+						$has_html_tag = true;
+					}
 				}
 			}
 		}
-
 		/**
 		 * Render: Wrap 'img' HTML tag in HTML tag (if 'tag' set) or anchor tag (if 'link' set)
 		 */
@@ -248,7 +250,7 @@ class Bricksable_Random_Image extends \Bricks\Element {
 
 		// Add _root attributes to outermost tag.
 		if ( $has_html_tag ) {
-			$this->set_attribute( '_root', 'class', 'tag brxe-image ' );
+			$this->set_attribute( '_root', 'class', 'tag brxe-image' );
 
 			$output .= "<{$this->tag} {$this->render_attributes( '_root' )}>";
 		}
@@ -282,10 +284,14 @@ class Bricksable_Random_Image extends \Bricks\Element {
 				}
 
 				// Render.
-				$image_atts  = array();
-				$img_classes = array( 'post-thumbnail', 'image' );
+				$image_atts = array();
+				// $img_classes = array( 'post-thumbnail', 'image' );
+				$this->set_attribute( 'img', 'class', 'css-filter' );
+
 				if ( isset( $size ) ) {
-					$img_classes[] = 'size-' . $size;
+					$this->set_attribute( 'img', 'class', "size-$size" );
+
+					// $img_classes[] = 'size-' . $size;
 				}
 				if ( ! $has_html_tag ) {
 					$img_classes[] = $this->attributes['_root']['class'][0];
@@ -304,35 +310,31 @@ class Bricksable_Random_Image extends \Bricks\Element {
 					$image_atts['data-bricks-lightbox-index']  = $index;
 					$image_atts['data-bricks-lightbox-id']     = $this->id;
 				}
-				$image_atts['class'] = join( ' ', $img_classes );
+				// $image_atts['class'] = join( ' ', $img_classes );
+				// Lazy load atts set via 'wp_get_attachment_image_attributes' filter
+				if ( $image['id'] ) {
 
-				if ( ! $has_html_tag ) {
-
-					$this->set_attribute( 'img', 'class', 'css-filter' );
-
-					foreach ( $this->attributes['_root'] as $key => $value ) {
-						$image_attributes[ $key ] = is_array( $value ) ? join( ' ', $value ) : $value;
+					// 'img' is root (no caption, no overlay)
+					if ( ! $has_html_tag && ! $link_to ) {
+						foreach ( $this->attributes['_root'] as $key => $value ) {
+							$image_atts[ $key ] = is_array( $value ) ? join( ' ', $value ) : $value;
+						}
 					}
 
 					foreach ( $this->attributes['img'] as $key => $value ) {
-						if ( isset( $image_attributes[ $key ] ) ) {
-							$image_attributes[ $key ] .= ' ' . ( is_array( $value ) ? join( ' ', $value ) : $value );
+						if ( isset( $image_atts[ $key ] ) ) {
+							$image_atts[ $key ] .= ' ' . ( is_array( $value ) ? join( ' ', $value ) : $value );
 						} else {
-							$image_attributes[ $key ] = is_array( $value ) ? join( ' ', $value ) : $value;
+							$image_atts[ $key ] = is_array( $value ) ? join( ' ', $value ) : $value;
 						}
 					}
+
 					// Merge custom attributes with img attributes.
 					$custom_attributes = $this->get_custom_attributes( $settings );
-					$image_attributes  = array_merge( $image_attributes, $custom_attributes, $image_atts );
-					$output           .= wp_get_attachment_image( $image['id'], $size, false, $image_attributes );
-				} else {
-					$output .= wp_get_attachment_image(
-						$image['id'],
-						$size,
-						false,
-						$image_atts
-					);
+					$image_atts        = array_merge( $image_atts, $custom_attributes );
+					$output           .= wp_get_attachment_image( $image['id'], $size, false, $image_atts );
 				}
+
 				if ( $close_a_tag ) {
 					$output .= '</a>';
 				}

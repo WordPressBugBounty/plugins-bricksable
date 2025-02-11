@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.7.1
-Stable tag: 1.6.71
+Stable tag: 1.6.72
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,9 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.72 (2025-02-11) =
+* Fix: Database not found error message in Random Image Element. 
+
 = 1.6.71 (2025-02-07) =
 * Enhance: Read More element collapsedHeight issue with ACSS. 
 
