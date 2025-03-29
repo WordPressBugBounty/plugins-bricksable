@@ -1228,7 +1228,7 @@ class Bricksable_Sticky_Video extends \Bricks\Element {
 			'animationDuration'     => isset( $settings['animationDuration'] ) && '' !== $settings['animationDuration'] ? 'brx-animate-' . $settings['animationDuration'] : '',
 			'stickyClosePauseVideo' => isset( $settings['stickyClosePauseVideo'] ) ? true : false,
 			'customPlayer'          => isset( $this->settings['customPlayer'] ) ? true : false,
-
+			'videoId'               => isset( $this->settings['youTubeId'] ) ? $this->settings['youTubeId'] : '',
 		);
 
 		$this->set_attribute( '_root', 'data-ba-bricks-sticky-video-options', wp_json_encode( $sticky_options ) );
@@ -1813,5 +1813,4 @@ class Bricksable_Sticky_Video extends \Bricks\Element {
 
 		return $image;
 	}
-
 }

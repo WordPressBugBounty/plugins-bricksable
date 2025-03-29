@@ -2,8 +2,8 @@
 Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
-Tested up to: 6.7.1
-Stable tag: 1.6.72
+Tested up to: 6.7.2
+Stable tag: 1.6.73
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,10 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.73 (2025-03-29) =
+* Fix: Sticky Video Element not working in some cases. 
+* Improve: Rewrote JavaScript for Sticky Video Element. 
+
 = 1.6.72 (2025-02-11) =
 * Fix: Database not found error message in Random Image Element. 
 
