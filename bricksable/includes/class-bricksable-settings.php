@@ -567,7 +567,7 @@ class Bricksable_Settings {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cloning of Bricksable_API is forbidden.' ) ), esc_attr( $this->parent->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cloning of Bricksable_API is forbidden.', 'bricksable' ) ), esc_attr( $this->parent->_version ) );
 	} // End __clone()
 
 	/**
@@ -576,7 +576,7 @@ class Bricksable_Settings {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Unserializing instances of Bricksable_API is forbidden.' ) ), esc_attr( $this->parent->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Unserializing instances of Bricksable_API is forbidden.', 'bricksable' ) ), esc_attr( $this->parent->_version ) );
 	} // End __wakeup()
 
 	/**

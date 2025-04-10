@@ -212,14 +212,14 @@ class Bricksable_Random_Image extends \Bricks\Element {
 				if ( BRICKS_DB_TEMPLATE_SLUG !== get_post_type( $this->post_id ) ) {
 					return $this->render_element_placeholder(
 						array(
-							'title' => esc_html__( 'Dynamic data is empty.', 'bricks' ),
+							'title' => esc_html__( 'Dynamic data is empty.', 'bricksable' ),
 						)
 					);
 				}
 			} else {
 				return $this->render_element_placeholder(
 					array(
-						'title' => esc_html__( 'No image selected.', 'bricks' ),
+						'title' => esc_html__( 'No image selected.', 'bricksable' ),
 					)
 				);
 			}

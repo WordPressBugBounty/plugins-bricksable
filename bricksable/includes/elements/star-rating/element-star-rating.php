@@ -411,7 +411,7 @@ class Bricksable_Star_Rating extends \Bricks\Element {
 		$this->controls['iconMargin']             = array(
 			'tab'   => 'style',
 			'group' => 'stars',
-			'label' => esc_html__( 'Star margin', 'extras' ),
+			'label' => esc_html__( 'Star margin', 'bricksable' ),
 			'type'  => 'dimensions',
 			'css'   => array(
 				array(

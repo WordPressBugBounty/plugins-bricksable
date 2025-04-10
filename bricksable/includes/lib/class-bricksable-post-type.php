@@ -100,7 +100,8 @@ class Bricksable_Post_Type {
 			'name'               => $this->plural,
 			'singular_name'      => $this->single,
 			'name_admin_bar'     => $this->single,
-			'add_new'            => _x( 'Add New', $this->post_type, 'bricksable' ),
+			//'add_new'            => _x( 'Add New', $this->post_type, 'bricksable' ),
+			'add_new'            => sprintf( __( 'Add New %s', 'bricksable' ), $this->post_type ),
 			'add_new_item'       => sprintf( __( 'Add New %s', 'bricksable' ), $this->single ),
 			'edit_item'          => sprintf( __( 'Edit %s', 'bricksable' ), $this->single ),
 			'new_item'           => sprintf( __( 'New %s', 'bricksable' ), $this->single ),
@@ -109,7 +110,7 @@ class Bricksable_Post_Type {
 			'search_items'       => sprintf( __( 'Search %s', 'bricksable' ), $this->plural ),
 			'not_found'          => sprintf( __( 'No %s Found', 'bricksable' ), $this->plural ),
 			'not_found_in_trash' => sprintf( __( 'No %s Found In Trash', 'bricksable' ), $this->plural ),
-			'parent_item_colon'  => sprintf( __( 'Parent %s' ), $this->single ),
+			'parent_item_colon'  => sprintf( /* translators: %s: Single name */ __( 'Parent %s' ), $this->single ),
 			'menu_name'          => $this->plural,
 		);
 		//phpcs:enable

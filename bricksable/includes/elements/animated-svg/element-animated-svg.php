@@ -54,7 +54,7 @@ class Bricksable_Animated_SVG extends Element {
 
 		$this->controls['height'] = array(
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Height', 'bricks' ),
+			'label'    => esc_html__( 'Height', 'bricksable' ),
 			'type'     => 'number',
 			'units'    => true,
 			'css'      => array(
@@ -68,7 +68,7 @@ class Bricksable_Animated_SVG extends Element {
 
 		$this->controls['width'] = array(
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Width', 'bricks' ),
+			'label'    => esc_html__( 'Width', 'bricksable' ),
 			'type'     => 'number',
 			'units'    => true,
 			'css'      => array(
@@ -82,7 +82,7 @@ class Bricksable_Animated_SVG extends Element {
 
 		$this->controls['strokeWidth'] = array(
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Stroke width', 'bricks' ),
+			'label'    => esc_html__( 'Stroke width', 'bricksable' ),
 			'type'     => 'number',
 			'min'      => 1,
 			'css'      => array(
@@ -97,7 +97,7 @@ class Bricksable_Animated_SVG extends Element {
 
 		$this->controls['stroke'] = array(
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Stroke color', 'bricks' ),
+			'label'    => esc_html__( 'Stroke color', 'bricksable' ),
 			'type'     => 'color',
 			'css'      => array(
 				array(
@@ -111,7 +111,7 @@ class Bricksable_Animated_SVG extends Element {
 
 		$this->controls['fill'] = array(
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Fill', 'bricks' ),
+			'label'    => esc_html__( 'Fill', 'bricksable' ),
 			'type'     => 'color',
 			'css'      => array(
 				array(

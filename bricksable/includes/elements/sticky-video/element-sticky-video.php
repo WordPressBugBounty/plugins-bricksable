@@ -1416,7 +1416,7 @@ class Bricksable_Sticky_Video extends \Bricks\Element {
 		$output .= '</div>';
 		// Root.
 		$output .= '</div>';
-
+		//phpcs:ignore
 		echo $output;
 	}
 
@@ -1501,7 +1501,7 @@ class Bricksable_Sticky_Video extends \Bricks\Element {
 		// Type: YouTube.
 		if ( $video_provider === 'youtube' ) {
 			// Get YouTube video ID.
-			parse_str( parse_url( $attributes['url'], PHP_URL_QUERY ), $url_params );
+			parse_str( wp_parse_url( $attributes['url'], PHP_URL_QUERY ), $url_params );
 
 			return array(
 				'videoType'       => 'youtube',

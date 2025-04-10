@@ -403,7 +403,7 @@ class Bricksable {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cloning of Bricksable is forbidden' ) ), esc_attr( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cloning of Bricksable is forbidden', 'bricksable' ) ), esc_attr( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -412,7 +412,7 @@ class Bricksable {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Unserializing instances of Bricksable is forbidden' ) ), esc_attr( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Unserializing instances of Bricksable is forbidden', 'bricksable' ) ), esc_attr( $this->_version ) );
 	} // End __wakeup ()
 
 	/**

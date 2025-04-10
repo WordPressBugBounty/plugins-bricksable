@@ -174,7 +174,7 @@ class Bricksable_Admin_API {
 			case 'color':
 				//phpcs:disable
 				?><div class="color-picker" style="position:relative;">
-					<input type="text" name="<?php esc_attr_e( $option_name ); ?>" class="color" value="<?php esc_attr_e( $data ); ?>" />
+					<input type="text" name="<?php esc_attr_e( $option_name, 'bricksable' ); ?>" class="color" value="<?php esc_attr_e( $data, 'bricksable' ); ?>" />
 					<div style="position:absolute;background:#FFF;z-index:99;border-radius:100%;" class="colorpicker"></div>
 				</div>
 				<?php
