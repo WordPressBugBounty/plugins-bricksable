@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Bricksable
- * Version: 1.6.74
+ * Version: 1.6.75
  * Plugin URI: https://bricksable.com/
  * Description: Elevate your website game with the Bricksable collection of premium elements for Bricks Builder. Designed to speed up your workflow, our customizable and fully responsive elements will take your website to the next level in no time.
  * Author: Bricksable
  * Author URI: https://bricksable.com/about-us/
  * Requires at least: 5.6
- * Tested up to: 6.7
+ * Tested up to: 6.8
  * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: bricksable
@@ -40,7 +40,7 @@ require_once 'includes/lib/class-bricksable-taxonomy.php';
  * @return object Bricksable
  */
 function bricksable() {
-	$instance = Bricksable::instance( __FILE__, '1.6.74' );
+	$instance = Bricksable::instance( __FILE__, '1.6.75' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = Bricksable_Settings::instance( $instance );

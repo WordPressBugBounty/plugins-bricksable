@@ -101,7 +101,7 @@ class Bricksable_Settings {
 		new Bricksable_Review(
 			array(
 				'slug'       => 'bricksable',
-				'name'       => __( 'Bricksable', 'bricksable' ),
+				'name'       => 'Bricksable',
 				'time_limit' => intval( '864000' ),
 			)
 		);
