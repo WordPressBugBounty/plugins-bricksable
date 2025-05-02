@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.8
-Stable tag: 1.6.75
+Stable tag: 1.6.76
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,9 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.76 (2025-05-02) =
+* Add: Prevent potential conflicts by checking for active Bricksable Pro plugin before running Bricksable.
+
 = 1.6.75 (2025-04-20) =
 * Fix: _load_textdomain_just_in_time was called incorrectly. 
 
