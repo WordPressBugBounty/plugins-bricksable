@@ -1684,8 +1684,8 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 	public function render() {
 		$settings = $this->settings;
 		// Front.
-		$icon_position = isset( $settings['front_iconPosition'] ) ? $settings['front_iconPosition'] : 'top';
-
+		$icon_position  = isset( $settings['front_iconPosition'] ) ? $settings['front_iconPosition'] : 'top';
+		$flipbox_effect = isset( $settings['effect'] ) ? $settings['effect'] : 'flip';
 		if ( $icon_position ) {
 			$wrapper_classes[] = isset( $settings['front_content_type'] ) && 'templates' === $settings['front_content_type'] ? 'ba-flipbox-content-templates' : 'icon-box-wrapper icon-position-' . $icon_position;
 		}
@@ -1984,21 +1984,21 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 		);
 
 		$flip_animation = '';
-		if ( 'flip' === $settings['effect'] ) {
+		if ( 'flip' === $flipbox_effect ) {
 			$flip_animation = $settings['flip_animation'];
 
-		} elseif ( 'zoom' === $settings['effect'] ) {
+		} elseif ( 'zoom' === $flipbox_effect ) {
 			$flip_animation = $settings['zoom_animation'];
-		} elseif ( 'slide' === $settings['effect'] ) {
+		} elseif ( 'slide' === $flipbox_effect ) {
 			$flip_animation = $settings['slide_animation'];
-		} elseif ( 'swap' === $settings['effect'] ) {
+		} elseif ( 'swap' === $flipbox_effect ) {
 			$flip_animation = $settings['swap_animation'];
 		} else {
 			$flip_animation = 'in';
 		}
-		$flip_3d           = isset( $settings['flip_3d'] ) && 'flip' === $settings['effect'] ? ' ba-flipbox-3d' : '';
+		$flip_3d           = isset( $settings['flip_3d'] ) && 'flip' === $flipbox_effect ? ' ba-flipbox-3d' : '';
 		$flip_elastic      = isset( $settings['flip_elastic'] ) ? ' ba-flipbox-flip-elastic' : '';
-		$flipbox_animation = esc_attr( $flip_3d ) . ' ba-flipbox-' . esc_attr( $settings['effect'] ) . '-' . esc_attr( $flip_animation ) . esc_attr( $flip_elastic );
+		$flipbox_animation = esc_attr( $flip_3d ) . ' ba-flipbox-' . esc_attr( $flipbox_effect ) . '-' . esc_attr( $flip_animation ) . esc_attr( $flip_elastic );
 		// Render element content.
 
 		$output = sprintf(
