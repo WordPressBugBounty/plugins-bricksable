@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.8
-Stable tag: 1.6.77
+Stable tag: 1.6.78
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,7 +22,7 @@ Elevate your website game with the Bricksable collection of premium elements for
 1. [Lottie](https://bricksable.com/features/lottie-element/) - Bricksable will allow you to harness the power of Lottie to add interactive vector animations to your websites. Lightweight JSON files provide high performance, quality and efficiency to keep your site loading and running fast. Impressive animations will engage more customers and boost conversation rates.
 1. [Text Notation](https://bricksable.com/features/text-notation/) - Put the focus on the most important parts of your text with an animated hand-drawn look and feel. Seven varied designs and eye-catching styling options will get your main points noticed and remembered.
 1. [Before After Image](https://bricksable.com/features/before-after-image/) - The before after image element allows you to display the before and after versions of an image by simply sliding over them. Users will be able to move a slider to easily compare the two images.
-1. [Icon List](https://bricksable.com/features/icon-list/) - Easily create a bulleted list using the Icon List Element. Display beautiful lists with icons, text or images as bullets for each list item! Create checklists, feature lists, or any other list and display your items clearly.
+1. [Dynamic Icon List](https://bricksable.com/features/icon-list/) - Easily create a bulleted list using the Icon List Element. Display beautiful lists with icons, text or images as bullets for each list item! Create checklists, feature lists, or any other list and display your items clearly.
 1. [Multi Heading](https://bricksable.com/features/multi-heading/) - Modern heading style that gives you the ability to create outstanding unlimited headings with different font, color, and unique style in the same header. It comes with Text Mask Image effect too!
 1. [Content Toggle](https://bricksable.com/features/content-toggle/) - Display different content in an interactive way to attract visitors instantly. The Content Toggle element allows your website visitors to switch from one content to another without limit. You can use your saved templates, text or images.  
 1. [Random Image](https://bricksable.com/features/random-image/) - Display random images on your webpage from a list of images you define.
@@ -94,6 +94,10 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.78 (2025-05-09) =
+* Add: Dynamic Options (Query Loop) to Icon List Element.
+* Change: Rename Icon List to Dynamic Icon List.
+
 = 1.6.77 (2025-05-08) =
 * Fix: Undefined array key "effect" in Flipbox Element. 
 

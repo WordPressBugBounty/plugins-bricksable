@@ -11,7 +11,7 @@ class Bricksable_IconList extends \Bricks\Element {
 	public $icon     = 'ti-list';
 
 	public function get_label() {
-		return esc_html__( 'Icon List', 'bricksable' );
+		return esc_html__( 'Dynamic Icon List', 'bricksable' );
 	}
 
 	public function set_control_groups() {
@@ -55,7 +55,6 @@ class Bricksable_IconList extends \Bricks\Element {
 			'title' => esc_html__( 'Separator', 'bricksable' ),
 			'tab'   => 'content',
 		);
-
 	}
 
 	public function set_controls() {
@@ -71,6 +70,7 @@ class Bricksable_IconList extends \Bricks\Element {
 			'type'          => 'repeater',
 			'selector'      => 'li',
 			'titleProperty' => 'title',
+			'checkLoop'     => true,
 			'fields'        => array(
 				'title'          => array(
 					'label'          => esc_html__( 'Title', 'bricksable' ),
@@ -172,6 +172,8 @@ class Bricksable_IconList extends \Bricks\Element {
 				),
 			),
 		);
+
+		$this->controls = array_replace_recursive( $this->controls, $this->get_loop_builder_controls( 'items' ) );
 
 		/**
 		 * List item
@@ -902,7 +904,6 @@ class Bricksable_IconList extends \Bricks\Element {
 			'small'    => true,
 			'required' => array( 'separatorDisable', '=', '' ),
 		);
-
 	}
 
 	public function enqueue_scripts() {
@@ -914,8 +915,12 @@ class Bricksable_IconList extends \Bricks\Element {
 		$icon     = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
 
 		// Element placeholder.
-		if ( ! isset( $settings['items'] ) || empty( $settings['items'] ) ) {
-			return $this->render_element_placeholder( array( 'text' => esc_html__( 'No list items defined.', 'bricksable' ) ) );
+		if ( empty( $settings['items'] ) ) {
+			return $this->render_element_placeholder(
+				array(
+					'title' => esc_html__( 'No list items defined.', 'bricksable' ),
+				)
+			);
 		}
 
 		$output = '';
@@ -926,112 +931,130 @@ class Bricksable_IconList extends \Bricks\Element {
 
 		$output .= '<ul>';
 
-		foreach ( $settings['items'] as $index => $list_item ) {
-			$list_item_classes = array( 'list-item' );
+		// Query Loop.
+		if ( isset( $settings['hasLoop'] ) ) {
+			$query = new \Bricks\Query(
+				array(
+					'id'       => $this->id,
+					'settings' => $settings,
+				)
+			);
 
-			if ( isset( $list_item['highlight'] ) ) {
-				$list_item_classes[] = 'highlighted';
-			}
+			// Get first item as template.
+			$template = ! empty( $settings['items'] ) ? $settings['items'][0] : false;
 
-			$this->set_attribute( "list-item-$index", 'class', $list_item_classes );
+			// Render loop.
+			$output .= $query->render( array( $this, 'render_repeater_item' ), compact( 'template', 'icon' ) );
 
-			$output .= '<li ' . $this->render_attributes( "list-item-$index" ) . '>';
+			// We need to destroy the Query to explicitly remove it from the global store.
+			$query->destroy();
+			unset( $query );
+		} else {
+			foreach ( $settings['items'] as $index => $list_item ) {
+				$list_item_classes = array( 'list-item' );
 
-			if ( isset( $list_item['highlightLabel'] ) && ! empty( $list_item['highlightLabel'] ) ) {
-				$output .= '<div class="highlight">' . esc_html( $list_item['highlightLabel'] ) . '</div>';
-			}
-			// Icon item precedes icon set under "Icon" control group for all items.
-			$icon = ! empty( $list_item['icon'] ) ? self::render_icon( $list_item['icon'] ) : $icon;
+				if ( isset( $list_item['highlight'] ) ) {
+					$list_item_classes[] = 'highlighted';
+				}
 
-			$output .= '<div class="content-wrapper">';
+				$this->set_attribute( "list-item-$index", 'class', $list_item_classes );
 
-			$output .= '<div class="title-wrapper">';
+				$output .= '<li ' . $this->render_attributes( "list-item-$index" ) . '>';
 
-			if ( isset( $list_item['title'] ) && ! empty( $list_item['title'] ) ) {
-				$title_tag = isset( $settings['titleTag'] ) ? esc_attr( $settings['titleTag'] ) : 'span';
+				if ( isset( $list_item['highlightLabel'] ) && ! empty( $list_item['highlightLabel'] ) ) {
+					$output .= '<div class="highlight">' . esc_html( $list_item['highlightLabel'] ) . '</div>';
+				}
+				// Icon item precedes icon set under "Icon" control group for all items.
+				$icon = ! empty( $list_item['icon'] ) ? self::render_icon( $list_item['icon'] ) : $icon;
 
-				$this->set_attribute( "title-$index", $title_tag );
-				$this->set_attribute( "title-$index", 'class', array( 'title' ) );
+				$output .= '<div class="content-wrapper">';
 
-				// Icon.
-				$this->set_attribute(
-					"icon-wrapper-$index",
-					'class',
-					array(
-						'icon-wrapper',
-						'icon',
-					)
-				);
-				$this->set_attribute(
-					"ba-icon-list-icon-$index",
-					'class',
-					array(
-						'ba-icon-list-icon',
-					)
-				);
+				$output .= '<div class="title-wrapper">';
 
-				if ( true === isset( $list_item['use_icon_text'] ) ) {
-					if ( isset( $list_item['icon_text'] ) ) {
+				if ( isset( $list_item['title'] ) && ! empty( $list_item['title'] ) ) {
+					$title_tag = isset( $settings['titleTag'] ) ? esc_attr( $settings['titleTag'] ) : 'span';
+
+					$this->set_attribute( "title-$index", $title_tag );
+					$this->set_attribute( "title-$index", 'class', array( 'title' ) );
+
+					// Icon.
+					$this->set_attribute(
+						"icon-wrapper-$index",
+						'class',
+						array(
+							'icon-wrapper',
+							'icon',
+						)
+					);
+					$this->set_attribute(
+						"ba-icon-list-icon-$index",
+						'class',
+						array(
+							'ba-icon-list-icon',
+						)
+					);
+
+					if ( true === isset( $list_item['use_icon_text'] ) ) {
+						if ( isset( $list_item['icon_text'] ) ) {
+							$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>'; //phpcs:ignore
+							$output .= '<span ' . $this->render_attributes( "ba-icon-list-icon-{$index}" ) . '>' . esc_html( $list_item['icon_text'] ) . '</span>'; //phpcs:ignore
+							$output .= '</span>';
+						}
+					} elseif ( true === isset( $list_item['use_icon_image'] ) ) {
+						// Image.
+						$image_atts           = array();
+						$image_atts['id']     = 'image-' . $list_item['icon_image']['id'];
+						$item_image_classes   = array( 'ba-icon-list-icon-image', 'css-filter' );
+						$item_image_classes[] = 'size-' . $list_item['icon_image']['size'];
+						$image_atts['class']  = join( ' ', $item_image_classes );
+						$this->set_attribute( "icon-list-icon-image-{$index}", 'class', $item_image_classes );
+						$this->set_attribute( "icon-list-icon-image-{$index}", 'src', esc_url( $list_item['icon_image']['url'] ) );
 						$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>'; //phpcs:ignore
-						$output .= '<span ' . $this->render_attributes( "ba-icon-list-icon-{$index}" ) . '>' . esc_html( $list_item['icon_text'] ) . '</span>'; //phpcs:ignore
-						$output .= '</span>';
-					}
-				} elseif ( true === isset( $list_item['use_icon_image'] ) ) {
-					// Image.
-					$image_atts           = array();
-					$image_atts['id']     = 'image-' . $list_item['icon_image']['id'];
-					$item_image_classes   = array( 'ba-icon-list-icon-image', 'css-filter' );
-					$item_image_classes[] = 'size-' . $list_item['icon_image']['size'];
-					$image_atts['class']  = join( ' ', $item_image_classes );
-					$this->set_attribute( "icon-list-icon-image-{$index}", 'class', $item_image_classes );
-					$this->set_attribute( "icon-list-icon-image-{$index}", 'src', esc_url( $list_item['icon_image']['url'] ) );
-					$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>'; //phpcs:ignore
 
-					// Lazy load atts set via 'wp_get_attachment_image_attributes' filter.
-					if ( isset( $list_item['icon_image']['id'] ) ) {
-						$output .= wp_get_attachment_image( $list_item['icon_image']['id'], $list_item['icon_image']['size'], false, $image_atts );
-					} elseif ( ! empty( $list_item['icon_image']['url'] ) ) {
-						$output .= '<img ' . $this->render_attributes( "icon-list-icon-image-{$index}" ) . '>'; //phpcs:ignore
-					}
-					$output .= '</span>';
-
-				} else {
-					if ( isset( $icon ) ) {
-						$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>'; //phpcs:ignore
-						$output .= $icon; //phpcs:ignore
+						// Lazy load atts set via 'wp_get_attachment_image_attributes' filter.
+						if ( isset( $list_item['icon_image']['id'] ) ) {
+							$output .= wp_get_attachment_image( $list_item['icon_image']['id'], $list_item['icon_image']['size'], false, $image_atts );
+						} elseif ( ! empty( $list_item['icon_image']['url'] ) ) {
+							$output .= '<img ' . $this->render_attributes( "icon-list-icon-image-{$index}" ) . '>'; //phpcs:ignore
+						}
 						$output .= '</span>';
+
+					} elseif ( isset( $icon ) ) {
+							$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>'; //phpcs:ignore
+							$output .= $icon; //phpcs:ignore
+							$output .= '</span>';
+					}
+					if ( isset( $list_item['link'] ) ) {
+						$this->set_link_attributes( "a-$index", $list_item['link'] );
+						$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '></a>';
+					} else {
+						$output .= '<' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '>';
+
 					}
 				}
-				if ( isset( $list_item['link'] ) ) {
-					$this->set_link_attributes( "a-$index", $list_item['link'] );
-					$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '></a>';
-				} else {
-					$output .= '<' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '>';
 
+				if ( ! isset( $list_item['separatorDisable'] ) ) {
+					$output .= '<span class="separator"></span>';
 				}
+
+				if ( isset( $list_item['meta'] ) && ! empty( $list_item['meta'] ) ) {
+					$this->set_attribute( "meta-$index", 'class', array( 'meta' ) );
+
+					$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . $list_item['meta'] . '</span>';
+				}
+
+				$output .= '</div>';
+
+				if ( isset( $list_item['description'] ) && ! empty( $list_item['description'] ) ) {
+					$this->set_attribute( "description-$index", 'class', array( 'description' ) );
+
+					$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . $list_item['description'] . '</div>';
+				}
+
+				$output .= '</div>'; // .content-wrapper
+
+				$output .= '</li>';
 			}
-
-			if ( ! isset( $list_item['separatorDisable'] ) ) {
-				$output .= '<span class="separator"></span>';
-			}
-
-			if ( isset( $list_item['meta'] ) && ! empty( $list_item['meta'] ) ) {
-				$this->set_attribute( "meta-$index", 'class', array( 'meta' ) );
-
-				$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . $list_item['meta'] . '</span>';
-			}
-
-			$output .= '</div>';
-
-			if ( isset( $list_item['description'] ) && ! empty( $list_item['description'] ) ) {
-				$this->set_attribute( "description-$index", 'class', array( 'description' ) );
-
-				$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . $list_item['description'] . '</div>';
-			}
-
-			$output .= '</div>'; // .content-wrapper
-
-			$output .= '</li>';
 		}
 
 		$output .= '</ul>';
@@ -1043,4 +1066,131 @@ class Bricksable_IconList extends \Bricks\Element {
 		echo $output; //phpcs:ignore
 	}
 
+	/**
+	 * Render repeater item for query loop
+	 */
+	public function render_repeater_item( $list_item, $index = 0, $args = array() ) {
+		$settings = $this->settings;
+
+		// Reset all attributes for this item to prevent accumulation.
+		$this->attributes = array();
+
+		$icon = ! empty( $settings['items'][0]['icon'] ) ? self::render_icon( $settings['items'][0]['icon'] ) : '';
+
+		// Set list item classes.
+		$list_item_classes = array( 'list-item' );
+		if ( isset( $settings['highlight'] ) ) {
+			$list_item_classes[] = 'highlighted';
+		}
+		$this->set_attribute( "list-item-$index", 'class', $list_item_classes );
+
+		$output = '<li ' . $this->render_attributes( "list-item-$index" ) . '>';
+
+		if ( isset( $settings['items'][0]['highlightLabel'] ) && ! empty( $settings['items'][0]['highlightLabel'] ) ) {
+			$output .= '<div class="highlight">' . esc_html( $settings['items'][0]['highlightLabel'] ) . '</div>';
+		}
+
+		$output .= '<div class="content-wrapper">';
+		$output .= '<div class="title-wrapper">';
+
+		// Icon settings from template.
+		$this->set_attribute(
+			"icon-wrapper-$index",
+			'class',
+			array(
+				'icon-wrapper',
+				'icon',
+			)
+		);
+
+		$this->set_attribute(
+			"ba-icon-list-icon-$index",
+			'class',
+			array(
+				'ba-icon-list-icon',
+			)
+		);
+
+		if ( true === isset( $settings['items'][0]['use_icon_text'] ) ) {
+			if ( isset( $settings['items'][0]['icon_text'] ) ) {
+				$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>';
+				$output .= '<span ' . $this->render_attributes( "ba-icon-list-icon-{$index}" ) . '>' . esc_html( $settings['items'][0]['icon_text'] ) . '</span>';
+				$output .= '</span>';
+			}
+		} elseif ( true === isset( $settings['items'][0]['use_icon_image'] ) ) {
+			// Image.
+			$image_atts         = array();
+			$item_image_classes = array( 'ba-icon-list-icon-image', 'css-filter' );
+
+			// Check if using dynamic data for icon image.
+			if ( isset( $settings['items'][0]['icon_image']['useDynamicData'] ) ) {
+				// Use dynamic data from the current list item.
+
+				$image_atts['class'] = join( ' ', array_filter( $item_image_classes ) );
+
+				$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>';
+				$output .= $settings['items'][0]['icon_image']['useDynamicData'];
+				$output .= '</span>';
+			} else {
+				// Use static data from template.
+				$image_atts['id']     = isset( $settings['items'][0]['icon_image']['id'] ) ? 'image-' . $settings['items'][0]['icon_image']['id'] : '';
+				$item_image_classes[] = isset( $settings['items'][0]['icon_image']['size'] ) ? 'size-' . $settings['items'][0]['icon_image']['size'] : '';
+				$image_atts['class']  = join( ' ', array_filter( $item_image_classes ) );
+
+				$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>';
+
+				if ( isset( $settings['items'][0]['icon_image']['id'] ) ) {
+					$output .= wp_get_attachment_image( $settings['items'][0]['icon_image']['id'], isset( $settings['items'][0]['icon_image']['size'] ) ? $settings['items'][0]['icon_image']['size'] : 'full', false, $image_atts );
+				} elseif ( ! empty( $settings['items'][0]['icon_image']['url'] ) ) {
+					$output .= '<img class="' . esc_attr( join( ' ', array_filter( $item_image_classes ) ) ) . '" src="' . esc_url( $settings['items'][0]['icon_image']['url'] ) . '">';
+				}
+				$output .= '</span>';
+			}
+		} elseif ( isset( $icon ) ) {
+				$output .= '<span ' . $this->render_attributes( "icon-wrapper-{$index}" ) . '>';
+				$output .= $icon;
+				$output .= '</span>';
+		}
+
+		// Title.
+		$title = isset( $list_item['title'] ) ? $list_item['title'] : ( isset( $list_item['post_title'] ) ? $list_item['post_title'] : '' );
+		if ( $title ) {
+			$title_tag = isset( $settings['titleTag'] ) ? esc_attr( $settings['titleTag'] ) : 'span';
+			$this->set_attribute( "title-$index", $title_tag );
+			$this->set_attribute( "title-$index", 'class', array( 'title' ) );
+
+			// Handle link.
+			if ( isset( $settings['items'][0]['link'] ) ) {
+				$this->set_link_attributes( "a-$index", $settings['items'][0]['link'] );
+				$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . $title . '</' . $title_tag . '></a>';
+			} else {
+				$output .= '<' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . $title . '</' . $title_tag . '>';
+			}
+		}
+
+		if ( ! isset( $settings['items'][0]['separatorDisable'] ) ) {
+			$output .= '<span class="separator"></span>';
+		}
+
+		// Meta.
+		$meta = isset( $list_item['meta'] ) ? $list_item['meta'] : ( isset( $list_item['post_date'] ) ? $list_item['post_date'] : '' );
+		if ( $meta ) {
+			$this->set_attribute( "meta-$index", 'class', array( 'meta' ) );
+			$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . $meta . '</span>';
+		}
+
+		$output .= '</div>'; // .title-wrapper
+
+		// Description.
+		$description = isset( $list_item['description'] ) ? $list_item['description'] : ( isset( $list_item['post_excerpt'] ) ? $list_item['post_excerpt'] : '' );
+		if ( $description ) {
+			$this->set_attribute( "description-$index", 'class', array( 'description' ) );
+			$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . $description . '</div>';
+		}
+
+		$output .= '</div>'; // .content-wrapper
+		$output .= '</li>';
+
+		return $output;
+	}
 }
