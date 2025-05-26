@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.8
-Stable tag: 1.6.78
+Stable tag: 1.6.79
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,9 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.79 (2025-05-21) =
+* Add: Compatibility with Bricksable Pro to avoid conflicts with the Lite version.
+
 = 1.6.78 (2025-05-09) =
 * Add: Dynamic Options (Query Loop) to Icon List Element.
 * Change: Rename Icon List to Dynamic Icon List.

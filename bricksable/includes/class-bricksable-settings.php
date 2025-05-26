@@ -525,6 +525,8 @@ class Bricksable_Settings {
 			$html .= '</h2>' . "\n";
 		}
 
+			$html .= '<div class="nav-content-wrapper">' . "\n";
+
 			$html .= '<form method="post" action="options.php" enctype="multipart/form-data">' . "\n";
 
 				// Get settings fields.
@@ -533,12 +535,19 @@ class Bricksable_Settings {
 				do_settings_sections( $this->parent->_token . '_settings' );
 				$html .= ob_get_clean();
 
-				$html     .= '<p class="submit">' . "\n";
-					$html .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";
-					$html .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings', 'bricksable' ) ) . '" />' . "\n";
-				$html     .= '</p>' . "\n";
-			$html         .= '</form>' . "\n";
-		$html             .= '</div>' . "\n";
+				$html                  .= '<p class="submit">' . "\n";
+					$html              .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";
+					$html              .= '<input name="Submit" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings', 'bricksable' ) ) . '" />' . "\n";
+				$html                  .= '</p>' . "\n";
+			$html                      .= '</form>' . "\n";
+					$html              .= '<div class="sidebar">' . "\n";
+					$bricksable_pro_img = esc_url( BRICKSABLE_PLUGIN_ASSET_URL . '/img/bricksable_pro.png' );
+					$html              .= '<div class="column-1"><a href="' . esc_url( 'https://bricksable.com/pro-is-coming-soon/' ) . '" target="_blank"><img src=' . $bricksable_pro_img . '></a>' . "\n";
+							$html      .= '</div>' . "\n";
+		$html                          .= '</div>' . "\n";
+
+		$html .= '</div>' . "\n";
+		$html .= '</div>' . "\n";
 
 		echo wp_kses( $html, $this->allowed_htmls );
 	}

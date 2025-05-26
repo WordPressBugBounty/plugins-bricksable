@@ -145,6 +145,10 @@ class Bricksable {
 		// Handle localisation.
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 0 );
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
+
+		// Persist Admin notice Dismissals.
+		add_action( 'admin_init', array( 'Bricksable_PAnD', 'init' ) );
+		add_action( 'admin_notices', array( $this, 'bricksable_pro__version' ) );
 	} // End __construct ()
 
 	/**
@@ -454,5 +458,26 @@ class Bricksable {
 			}
 		}
 		return $elements;
+	}
+
+	/**
+	 * Persist Admin notice Dismissals
+	 */
+	public function bricksable_pro__version() {
+		if ( ! Bricksable_PAnD::is_admin_notice_active( 'notice-bricksable-pro-coming' ) ) {
+			return;
+		}
+		if ( file_exists( WP_PLUGIN_DIR . '/bricksable-pro/bricksable-pro.php' ) ) {
+			// Check if the bricksable plugin is active.
+			if ( is_plugin_active( 'bricksable-pro/bricksable-pro.php' ) ) {
+				return;
+			}
+		}
+		?>
+		<div data-dismissible="notice-bricksable-pro-coming" class="notice notice-info is-dismissible">
+			<p><?php esc_html_e( 'Bricksable Pro Is Coming Soon! We’re incredibly grateful to have nearly 10,000 sites using Bricksable — and that trust means the world to us. Even in its free version, Bricksable has made an impact… and now, it’s time to shine like a diamond..', 'bricksable' ); ?></p>
+			<p><a href="https://bricksable.com/pro-is-coming-soon/" target="_blank" class="button-primary"><?php esc_html_e( 'Join the waitlist for Bricksable Pro!', 'bricksable' ); ?></a></p>
+		</div>
+		<?php
 	}
 }
