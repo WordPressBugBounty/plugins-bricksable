@@ -467,11 +467,20 @@ class Bricksable {
 		if ( ! Bricksable_PAnD::is_admin_notice_active( 'notice-bricksable-pro-coming' ) ) {
 			return;
 		}
+
 		if ( file_exists( WP_PLUGIN_DIR . '/bricksable-pro/bricksable-pro.php' ) ) {
 			// Check if the bricksable plugin is active.
 			if ( is_plugin_active( 'bricksable-pro/bricksable-pro.php' ) ) {
 				return;
 			}
+		}
+
+		// Only show on the Plugins admin page and Bricksable settings page.
+		$screen = get_current_screen();
+
+		$allowed_screens = array( 'plugins', 'bricks_page_bricksable_settings' );
+		if ( ! isset( $screen->id ) || ! in_array( $screen->id, $allowed_screens, true ) ) {
+			return;
 		}
 		?>
 		<div data-dismissible="notice-bricksable-pro-coming" class="notice notice-info is-dismissible">
