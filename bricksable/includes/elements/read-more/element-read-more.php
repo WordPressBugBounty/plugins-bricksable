@@ -10,7 +10,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 	public $name         = 'ba-read-more';
 	public $icon         = 'ti-layout-list-post';
 	public $css_selector = '';
-	public $scripts      = array( 'bricksableReadMore' );
+	public $scripts      = array( 'bricksableInitReadMoreInstances' );
 	public $nestable     = true; // true || @since 1.5.
 
 	// Methods: Builder-specific.
@@ -159,7 +159,8 @@ class Bricksable_Read_More extends \Bricks\Element {
 		$this->controls['content'] = array(
 			'tab'      => 'content',
 			'type'     => 'editor',
-			'default'  => '<p>' . esc_html__( 'Here goes your text ... discover a convenient way to manage lengthy blocks of text with our new "Read more" and "Close" functionality. With a simple click on the "Read more" link, you can expand the text and dive into all the juicy details. No more endless scrolling! When you’re done, just click "Close" to bring it back to a neat and compact form. It’s a super convenient way to manage lengthy content without any hassle. Give it a try and enjoy a smoother reading experience with our user-friendly "Read more" and "Close" feature!', 'bricksable' ) . '</p>',
+			// 'default'  => '<p>' . esc_html__( 'Here goes your text ... discover a convenient way to manage lengthy blocks of text with our new "Read more" and "Close" functionality. With a simple click on the "Read more" link, you can expand the text and dive into all the juicy details. No more endless scrolling! When you’re done, just click "Close" to bring it back to a neat and compact form. It’s a super convenient way to manage lengthy content without any hassle. Give it a try and enjoy a smoother reading experience with our user-friendly "Read more" and "Close" feature!', 'bricksable' ) . '</p>',
+			'default' => 'Here goes your text ... discover a convenient way to manage lengthy blocks of text with our new "Read more" and "Close" functionality. With a simple click on the "Read more" link, you can expand the text and dive into all the juicy details. No more endless scrolling! When you’re done, just click "Close" to bring it back to a neat and compact form. It’s a super convenient way to manage lengthy content without any hassle. Give it a try and enjoy a smoother reading experience with our user-friendly "Read more" and "Close" feature!',
 			'required' => array( 'readMoreType', '!=', 'nestable' ),
 		);
 
@@ -256,7 +257,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'group'       => 'settings',
 			'label'       => esc_html__( 'Collapsed Height (px)', 'bricksable' ),
 			'type'        => 'number',
-			'default'     => '100',
+			'default'     => '50',
 			'placeholder' => esc_html__( '100', 'bricksable' ),
 			'units'       => array(
 				'px' => array(
@@ -268,7 +269,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'description' => esc_html__( 'The maximum height of the component in it’s collapsed state.', 'bricksable' ),
 			'css'         => array(
 				array(
-					'property' => 'max-height',
+					'property' => '--max-height',
 					'selector' => '.ba-read-more-wrapper',
 				),
 			),
@@ -403,8 +404,8 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'type'    => 'align-items',
 			'css'     => array(
 				array(
-					'property' => 'align-self',
-					'selector' => '.ba-read-more-button',
+					'property' => 'justify-content',
+					'selector' => '.ba-read-more-button-wrapper',
 				),
 			),
 			'default' => 'center',
@@ -609,7 +610,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 			'speed'                          => isset( $settings['speed'] ) ? intval( $settings['speed'] ) : 100,
 			'collapsedHeight'                => isset( $settings['collapsedHeight'] ) ? intval( $settings['collapsedHeight'] ) : 100,
 			'collapsedHeightTabletPortrait'  => isset( $settings['collapsedHeight:tablet_portrait'] ) ? intval( $settings['collapsedHeight:tablet_portrait'] ) : intval( $collapsed_height ),
-			'collapsedHeightMobileLandScape' => isset( $settings['collapsedHeight:mobile_landscape'] ) ? intval( $settings['collapsedHeight:mobile_landscape'] ) : intval( $collapsed_height_tablet_portrait ),
+			'collapsedHeightMobileLandscape' => isset( $settings['collapsedHeight:mobile_landscape'] ) ? intval( $settings['collapsedHeight:mobile_landscape'] ) : intval( $collapsed_height_tablet_portrait ),
 			'collapsedHeightMobilePortrait'  => isset( $settings['collapsedHeight:mobile_portrait'] ) ? intval( $settings['collapsedHeight:mobile_portrait'] ) : intval( $collapsed_height_mobile_landscape ),
 			'heightMargin'                   => isset( $settings['heightMargin'] ) ? intval( $settings['heightMargin'] ) : 16,
 			'moreLink'                       => isset( $settings['moreText'] ) ? esc_attr( $settings['moreText'] ) : esc_attr( 'Read more' ),
@@ -655,13 +656,28 @@ class Bricksable_Read_More extends \Bricks\Element {
 				if ( $content ) {
 					$output .= "<div {$this->render_attributes( 'content' )}>{$content}</div>";
 				}
+				
 			} elseif ( method_exists( '\Bricks\Frontend', 'render_children' ) ) {
-					$output .= \Bricks\Frontend::render_children( $this );
+
+					$this->set_attribute( 'content', 'class', 'ba-readmore-content' );
+					$content = \Bricks\Frontend::render_children( $this );
+					if ( $content ) {
+						$output .= "<div {$this->render_attributes( 'content' )}>{$content}</div>";
+					}
 			}
 		}
 		// $this->get_breakpoints();
 		// Wrapper.
 		$output .= '</div>';
+		// Add Read More button after content
+			$output .= '<div class="ba-read-more-button-wrapper">';
+			$output .= '<button type="button" class="ba-read-more-button">';
+			$output .= '<span>' . ( isset( $settings['moreText'] ) ? esc_html( $settings['moreText'] ) : esc_html__( 'Read More', 'bricksable' ) ) . '</span>';
+			if ( ! empty( $settings['useButtonIcon'] ) && ! empty( $settings['readMoreIcon']['icon'] ) ) {
+				$output .= '<span class="ba-read-more-icon"><i class="' . esc_attr( $settings['readMoreIcon']['icon'] ) . '"></i></span>';
+			}
+			$output .= '</button>';
+			$output .= '</div>';
 		// Root.
 		$output .= '</div>';
 		//phpcs:ignore
