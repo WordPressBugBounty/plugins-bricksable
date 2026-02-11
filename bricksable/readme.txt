@@ -2,7 +2,7 @@
 Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
-Tested up to: 6.8
+Tested up to: 6.8.3
 Stable tag: 1.6.81
 Requires PHP: 7.4
 License: GPLv2 or later
