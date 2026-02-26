@@ -2,8 +2,8 @@
 Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
-Tested up to: 6.8.3
-Stable tag: 1.6.81
+Tested up to: 6.9
+Stable tag: 1.6.82
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -94,6 +94,10 @@ You must have Bricks Builder installed in order for this plugin to work.
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
 == Changelog ==
+= 1.6.82 (2026-02-26) =
+* Fix: Resolved WPML compatibility issue with the Content Toggle element.
+* Add: Introduced migration method to update the Content Toggle variable to the new variable format.
+
 = 1.6.81 (2025-06-20) =
 * Improve: The JavaScript 'Read More' element has been completely rewritten from scratch. This significant improvement ensures it now functions as expected in a wider range of scenarios and adapts seamlessly to responsive designs.
 

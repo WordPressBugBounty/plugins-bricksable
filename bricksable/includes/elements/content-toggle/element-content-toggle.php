@@ -43,7 +43,7 @@ class Bricksable_Content_Toggle extends \Bricks\Element {
 		// Delete control '_typography'.
 		unset( $this->controls['_typography'] );
 
-		$this->controls['content_toggle_item'] = array(
+		$this->controls['contentToggleItem'] = array(
 			'tab'           => 'content',
 			'checkLoop'     => true,
 			'label'         => esc_html__( 'Content Toggle', 'bricksable' ),
@@ -476,15 +476,20 @@ class Bricksable_Content_Toggle extends \Bricks\Element {
 
 		$label_classes = array(
 			'ba-content-toggle-switcher',
-			'ba-content-toggle-style-' . $settings['toggle_style'],
+			'ba-content-toggle-style-' . $toggle_style,
 		);
 
 		$this->set_attribute( 'label-wrapper', 'div' );
 		$this->set_attribute( 'label-wrapper', 'class', $label_classes );
-		$content_toggle_item = ! empty( $settings['content_toggle_item'] ) ? $settings['content_toggle_item'] : false;
+		$content_toggle_item = ! empty( $settings['contentToggleItem'] ) ? $settings['contentToggleItem'] : ( ! empty( $settings['content_toggle_item'] ) ? $settings['content_toggle_item'] : false );
 		$label               = isset( $settings['label'] ) ? $settings['label'] : '';
 
 		$output .= '<' . $this->render_attributes( 'label-wrapper' ) . '>';
+
+		if ( ! $content_toggle_item ) {
+			echo $output . '</div></div>';
+			return;
+		}
 
 		// Query Loop.
 		if ( isset( $settings['hasLoop'] ) ) {
