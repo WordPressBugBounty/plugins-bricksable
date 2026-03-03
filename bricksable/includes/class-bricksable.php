@@ -148,7 +148,7 @@ class Bricksable {
 
 		// Persist Admin notice Dismissals.
 		add_action( 'admin_init', array( 'Bricksable_PAnD', 'init' ) );
-		add_action( 'admin_notices', array( $this, 'bricksable_pro__version' ) );
+		add_action( 'admin_notices', array( $this, 'bricksable_pro__promo' ) );
 	} // End __construct ()
 
 	/**
@@ -463,30 +463,62 @@ class Bricksable {
 	/**
 	 * Persist Admin notice Dismissals
 	 */
-	public function bricksable_pro__version() {
-		if ( ! Bricksable_PAnD::is_admin_notice_active( 'notice-bricksable-pro-coming' ) ) {
+	public function bricksable_pro__promo() {
+		if ( ! Bricksable_PAnD::is_admin_notice_active( 'notice-bricksable-pro-promo-forever' ) ) {
 			return;
 		}
 
 		if ( file_exists( WP_PLUGIN_DIR . '/bricksable-pro/bricksable-pro.php' ) ) {
-			// Check if the bricksable plugin is active.
 			if ( is_plugin_active( 'bricksable-pro/bricksable-pro.php' ) ) {
 				return;
 			}
 		}
-
-		// Only show on the Plugins admin page and Bricksable settings page.
-		$screen = get_current_screen();
-
-		$allowed_screens = array( 'plugins', 'bricks_page_bricksable_settings' );
-		if ( ! isset( $screen->id ) || ! in_array( $screen->id, $allowed_screens, true ) ) {
-			return;
-		}
 		?>
-		<div data-dismissible="notice-bricksable-pro-coming" class="notice notice-info is-dismissible">
-			<p><?php esc_html_e( 'Bricksable Pro Is Coming Soon! We’re incredibly grateful to have nearly 10,000 sites using Bricksable — and that trust means the world to us. Even in its free version, Bricksable has made an impact… and now, it’s time to shine like a diamond..', 'bricksable' ); ?></p>
-			<p><a href="https://bricksable.com/pro-is-coming-soon/" target="_blank" class="button-primary"><?php esc_html_e( 'Join the waitlist for Bricksable Pro!', 'bricksable' ); ?></a></p>
-		</div>
+	<div data-dismissible="notice-bricksable-pro-promo-forever" class="notice notice-info is-dismissible" style="padding: 12px 16px;">
+		<p style="font-size: 14px;">
+	🎉 <strong><?php esc_html_e( 'Bricksable Pro is here!', 'bricksable' ); ?></strong>
+		<?php esc_html_e( 'After thousands of sites trusting our free version, we\'ve leveled up. Bricksable Pro is now live — packed with more elements, more power, and built for serious Bricks builders. Grab your 10% off launch discount before it\'s gone!', 'bricksable' ); ?>
+		<em><?php esc_html_e( '(This notice will only appear once.)', 'bricksable' ); ?></em>
+</p>
+		<p>
+			<code id="bricksable-promo-code" style="font-size: 15px; padding: 6px 12px; background: #f0f0f0; border: 1px dashed #999; border-radius: 4px; letter-spacing: 1px; font-weight: bold;">JOURNEYTOPRO10</code>
+			<button 
+	type="button" 
+	id="bricksable-copy-btn"
+	class="button button-secondary" 
+	style="margin-left: 8px; vertical-align: middle;"
+	onclick="
+		var code = 'JOURNEYTOPRO10';
+		if (navigator.clipboard && window.isSecureContext) {
+			navigator.clipboard.writeText(code).then(function() {
+				var btn = document.getElementById('bricksable-copy-btn');
+				btn.textContent = '✓ Copied!';
+				btn.style.color = 'green';
+				setTimeout(function() { btn.textContent = 'Copy Code'; btn.style.color = ''; }, 2000);
+			});
+		} else {
+			var el = document.createElement('textarea');
+			el.value = code;
+			el.style.position = 'absolute';
+			el.style.left = '-9999px';
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+			var btn = document.getElementById('bricksable-copy-btn');
+			btn.textContent = '✓ Copied!';
+			btn.style.color = 'green';
+			setTimeout(function() { btn.textContent = 'Copy Code'; btn.style.color = ''; }, 2000);
+		}
+	"
+><?php esc_html_e( 'Copy Code', 'bricksable' ); ?></button>
+		</p>
+		<p>
+			<a href="https://bricksable.com/pricing/" target="_blank" class="button-primary">
+				<?php esc_html_e( 'Get Bricksable Pro — 10% Off!', 'bricksable' ); ?>
+			</a>
+		</p>
+	</div>
 		<?php
 	}
 }

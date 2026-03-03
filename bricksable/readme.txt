@@ -3,7 +3,7 @@ Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
 Tested up to: 6.9
-Stable tag: 1.6.82
+Stable tag: 1.6.83
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -90,10 +90,30 @@ Installing "Bricksable" can be done either by searching for "Bricksable" via the
 = Do I need Bricks Builder for this to work? =
 You must have Bricks Builder installed in order for this plugin to work.
 
+= Will Bricksable work with my existing Bricks Builder setup? =
+Absolutely. Bricksable Free/Lite or Bricksable Pro is built to integrate seamlessly with Bricks Builder – same intuitive interface, same drag-and-drop workflow. No conflicts, no compatibility issues. If you're using Bricks now, Pro drops in instantly. We test every update against the latest Bricks versions to ensure zero friction.
+
 = Is this plugin free? =
 Yes! Bricksable is absolutely free. There is no hidden charge.
 
+= What if I update to Bricksable Pro version? =
+**Your existing elements and content are 100% safe.** When you upgrade from Bricksable Free to Pro, all your current designs, layouts, and elements continue working seamlessly. Zero data loss, zero rebuilding required. You simply unlock additional Pro elements and extensions on top of what you already have. It's a pure upgrade – no friction, no risk.
+
+= What's the differences between Bricksable Free/Lite and Bricksable Pro version? =
+This is a common question that we get asked here every now and then which is why we decided to create this detailed post to outline the key differences between Bricksable Free/Lite and Bricksable Pro. 
+**Bricksable Free** includes 20+ essential elements (Flipbox, Floating, Lottie, Icon List, Star Rating, Text Notation, etc.) – perfect for getting started and building solid sites at zero cost.
+
+**Bricksable Pro** adds more premium elements including Animated Headlines, Animated SVG, Charts, Content Timeline, Image Accordion, Custom Cursor, Stacking Cards, On-Scroll Animations, and more – plus upcoming extensions. 
+
+**Key Difference**: Free builds your solid foundation with 20+ essential elements. Pro supercharges it with more advanced elements and extensions – delivering wow-factor interactivity, stunning animations that captivate clients and skyrocket engagement.
+
+= Will you still add more features to the Bricksable Free/Lite version? =
+**Absolutely, yes!** We're committed to keeping Bricksable Free powerful and relevant. We actively listen to user suggestions and feedback – if it's a great idea that benefits the community, we'll build it. **Your voice matters.** Reach out to us with feature requests, and if we think it's a solid addition, it goes on our roadmap. Together, we're making Bricksable legendary and taking Bricks Builder to the next level! 🚀
+
 == Changelog ==
+= 1.6.83 (2026-03-03) =
+* Improve: Compatibility with Bricksable Pro to avoid conflicts with the Lite version.
+
 = 1.6.82 (2026-02-26) =
 * Fix: Resolved WPML compatibility issue with the Content Toggle element.
 * Add: Introduced migration method to update the Content Toggle variable to the new variable format.
