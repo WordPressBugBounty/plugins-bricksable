@@ -1452,13 +1452,16 @@ class Bricksable_Image_HotSpots extends \Bricks\Element {
 			}
 			if ( isset( $hotspot_item['title'] ) ) {
 				$this->set_attribute( "title-$index", 'class', 'ba-image-hotspot-title' );
-				$hotspot_output .= '<span ' . $this->render_attributes( "title-{$index}" ) . '>' . $hotspot_item['title'] . '</span>';
+				$hotspot_output .= '<span ' . $this->render_attributes( "title-{$index}" ) . '>' . esc_html( $hotspot_item['title'] ) . '</span>';
 			}
 				$hotspot_output .= '</div>'; // End of icon wrapper.
 			if ( isset( $hotspot_item['content'] ) && ! empty( $hotspot_item['content'] ) ) {
 				$this->set_attribute( "content-$index", 'class', array( 'ba-image-hotspot-content-wrapper' ) );
+				$hotspot_content = $hotspot_item['content'];
+				$hotspot_content = $this->render_dynamic_data( $hotspot_content );
+				$hotspot_content = \Bricks\Helpers::parse_editor_content( $hotspot_content );
 				$hotspot_output .= '<div ' . $this->render_attributes( "content-{$index}" ) . '>';
-				$hotspot_output .= $hotspot_item['content'];
+				$hotspot_output .= $hotspot_content;
 				$hotspot_output .= '</div>';
 			}
 			// End of hotspot-wrapper.

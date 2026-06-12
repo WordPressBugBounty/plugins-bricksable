@@ -591,7 +591,7 @@ class Bricksable_Content_Toggle extends \Bricks\Element {
 
 		// Label.
 		if ( isset( $content_toggle_item['label'] ) ) {
-			$output .= '<' . $this->render_attributes( "content-toggle-item-$index" ) . '><' . $this->render_attributes( "content-toggle-label-title-$index" ) . '>' . $content_toggle_item['label'] . '</span></div>';
+			$output .= '<' . $this->render_attributes( "content-toggle-item-$index" ) . '><' . $this->render_attributes( "content-toggle-label-title-$index" ) . '>' . esc_html( $content_toggle_item['label'] ) . '</span></div>';
 		}
 
 		$this->loop_index++;
@@ -640,7 +640,7 @@ class Bricksable_Content_Toggle extends \Bricks\Element {
 			$output .= do_shortcode( '[bricks_template id="' . $template_id . '" ]' );
 		} else {
 			if ( isset( $content_toggle_item['content'] ) ) {
-				$output .= $content_toggle_item['content'];
+				$output .= esc_html( $content_toggle_item['content'] );
 			}
 		}
 

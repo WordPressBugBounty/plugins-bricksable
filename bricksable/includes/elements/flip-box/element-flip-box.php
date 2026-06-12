@@ -1712,15 +1712,17 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 		$front_content_output    = '';
 
 		if ( isset( $settings['front_heading'] ) ) {
-			$front_heading_output = '<' . $this->render_attributes( 'front_heading' ) . '>' . $settings['front_heading'] . '</' . $front_heading_tag . '>';
+			$front_heading_output = '<' . $this->render_attributes( 'front_heading' ) . '>' . esc_html( $settings['front_heading'] ) . '</' . $front_heading_tag . '>';
 		}
 
 		if ( isset( $settings['front_subheading'] ) ) {
-			$front_subheading_output .= '<div ' . $this->render_attributes( 'front_subheading' ) . '>' . $settings['front_subheading'] . '</div>';
+			$front_subheading_output .= '<div ' . $this->render_attributes( 'front_subheading' ) . '>' . esc_html( $settings['front_subheading'] ) . '</div>';
 		}
 
 		if ( isset( $settings['front_content'] ) ) {
-			$front_subheading_output .= '<div ' . $this->render_attributes( 'front_content' ) . '>' . $settings['front_content'] . '</div>';
+			$front_content = $this->render_dynamic_data( $settings['front_content'] );
+			$front_content = \Bricks\Helpers::parse_editor_content( $front_content );
+			$front_content_output .= '<div ' . $this->render_attributes( 'front_content' ) . '>' . $front_content . '</div>';
 		}
 
 		// Render front icon box.
@@ -1827,15 +1829,17 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 		$back_content_output    = '';
 
 		if ( isset( $settings['back_heading'] ) ) {
-			$back_heading_output .= '<' . $this->render_attributes( 'back_heading' ) . '>' . $settings['back_heading'] . '</' . $back_heading_tag . '>';
+			$back_heading_output .= '<' . $this->render_attributes( 'back_heading' ) . '>' . esc_html( $settings['back_heading'] ) . '</' . $back_heading_tag . '>';
 		}
 
 		if ( isset( $settings['back_subheading'] ) ) {
-			$back_subheading_output .= '<div ' . $this->render_attributes( 'back_subheading' ) . '>' . $settings['back_subheading'] . '</div>';
+			$back_subheading_output .= '<div ' . $this->render_attributes( 'back_subheading' ) . '>' . esc_html( $settings['back_subheading'] ) . '</div>';
 		}
 
 		if ( isset( $settings['back_content'] ) ) {
-			$back_content_output .= '<div ' . $this->render_attributes( 'back_content' ) . '>' . $settings['back_content'] . '</div>';
+			$back_content = $this->render_dynamic_data( $settings['back_content'] );
+			$back_content = \Bricks\Helpers::parse_editor_content( $back_content );
+			$back_content_output .= '<div ' . $this->render_attributes( 'back_content' ) . '>' . $back_content . '</div>';
 		}
 		// Render back icon box.
 		$back_icon_box_html = '';
@@ -1962,7 +1966,7 @@ class Bricksable_Element_Flipbox extends \Bricks\Element {
 			}
 
 			if ( isset( $settings['back_button_text'] ) ) {
-				$button_html .= '<span ' . $this->render_attributes( 'button-text' ) . '>' . trim( $settings['back_button_text'] ) . '</span>';
+				$button_html .= '<span ' . $this->render_attributes( 'button-text' ) . '>' . esc_html( trim( $settings['back_button_text'] ) ) . '</span>';
 			}
 
 			if ( isset( $settings['back_button_icon']['icon'] ) && 'right' === $icon_position ) {

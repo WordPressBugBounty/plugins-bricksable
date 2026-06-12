@@ -644,7 +644,7 @@ class Bricksable_Read_More extends \Bricks\Element {
 				$this->set_attribute( 'title', 'class', $title_classes );
 
 				if ( ! empty( $settings['title'] ) ) {
-					$output .= '<' . $this->render_attributes( 'title' ) . '>' . $settings['title'] . '</' . $this->tag . '>';
+					$output .= '<' . $this->render_attributes( 'title' ) . '>' . esc_html( $settings['title'] ) . '</' . $this->tag . '>';
 				}
 
 				// Content.

@@ -562,7 +562,7 @@ class Bricksable_Text_Notation extends \Bricks\Element {
 		}
 
 		$output  = '<' . $this->render_attributes( 'notation_text' ) . '>';
-		$output .= '<span class="ba-text-notation-inner">' . $settings['text'] . '</span>';
+		$output .= '<span class="ba-text-notation-inner">' . esc_html( $settings['text'] ) . '</span>';
 		$output .= '</' . $notation_tag . '>';
 
 		//phpcs:ignore

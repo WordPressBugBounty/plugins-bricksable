@@ -1026,9 +1026,9 @@ class Bricksable_IconList extends \Bricks\Element {
 					}
 					if ( isset( $list_item['link'] ) ) {
 						$this->set_link_attributes( "a-$index", $list_item['link'] );
-						$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '></a>';
+						$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $this->render_attributes( "title-$index" ) . '>' . esc_html( $list_item['title'] ) . '</' . $title_tag . '></a>';
 					} else {
-						$output .= '<' . $this->render_attributes( "title-$index" ) . '>' . $list_item['title'] . '</' . $title_tag . '>';
+						$output .= '<' . $this->render_attributes( "title-$index" ) . '>' . esc_html( $list_item['title'] ) . '</' . $title_tag . '>';
 
 					}
 				}
@@ -1040,7 +1040,7 @@ class Bricksable_IconList extends \Bricks\Element {
 				if ( isset( $list_item['meta'] ) && ! empty( $list_item['meta'] ) ) {
 					$this->set_attribute( "meta-$index", 'class', array( 'meta' ) );
 
-					$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . $list_item['meta'] . '</span>';
+					$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . esc_html( $list_item['meta'] ) . '</span>';
 				}
 
 				$output .= '</div>';
@@ -1048,7 +1048,7 @@ class Bricksable_IconList extends \Bricks\Element {
 				if ( isset( $list_item['description'] ) && ! empty( $list_item['description'] ) ) {
 					$this->set_attribute( "description-$index", 'class', array( 'description' ) );
 
-					$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . $list_item['description'] . '</div>';
+					$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . esc_html( $list_item['description'] ) . '</div>';
 				}
 
 				$output .= '</div>'; // .content-wrapper
@@ -1162,9 +1162,9 @@ class Bricksable_IconList extends \Bricks\Element {
 			// Handle link.
 			if ( isset( $settings['items'][0]['link'] ) ) {
 				$this->set_link_attributes( "a-$index", $settings['items'][0]['link'] );
-				$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . $title . '</' . $title_tag . '></a>';
+				$output .= '<a ' . $this->render_attributes( "a-$index" ) . '><' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . esc_html( $title ) . '</' . $title_tag . '></a>';
 			} else {
-				$output .= '<' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . $title . '</' . $title_tag . '>';
+				$output .= '<' . $title_tag . ' ' . $this->render_attributes( "title-$index" ) . '>' . esc_html( $title ) . '</' . $title_tag . '>';
 			}
 		}
 
@@ -1176,7 +1176,7 @@ class Bricksable_IconList extends \Bricks\Element {
 		$meta = isset( $list_item['meta'] ) ? $list_item['meta'] : ( isset( $list_item['post_date'] ) ? $list_item['post_date'] : '' );
 		if ( $meta ) {
 			$this->set_attribute( "meta-$index", 'class', array( 'meta' ) );
-			$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . $meta . '</span>';
+			$output .= '<span ' . $this->render_attributes( "meta-$index" ) . '>' . esc_html( $meta ) . '</span>';
 		}
 
 		$output .= '</div>'; // .title-wrapper
@@ -1185,7 +1185,7 @@ class Bricksable_IconList extends \Bricks\Element {
 		$description = isset( $list_item['description'] ) ? $list_item['description'] : ( isset( $list_item['post_excerpt'] ) ? $list_item['post_excerpt'] : '' );
 		if ( $description ) {
 			$this->set_attribute( "description-$index", 'class', array( 'description' ) );
-			$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . $description . '</div>';
+			$output .= '<div ' . $this->render_attributes( "description-$index" ) . '>' . esc_html( $description ) . '</div>';
 		}
 
 		$output .= '</div>'; // .content-wrapper

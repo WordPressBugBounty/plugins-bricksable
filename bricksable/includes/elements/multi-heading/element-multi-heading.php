@@ -334,9 +334,9 @@ class Bricksable_Multi_Heading extends Element {
 
 			// Heading.
 			if ( isset( $item['use_background_text_mask'] ) ) {
-				$output .= '<' . $this->render_attributes( "multi-heading-item-$index" ) . '><' . $this->render_attributes( "multi-heading-item-text-mask-$index" ) . '>' . $item['text'] . '</span></span>';
+				$output .= '<' . $this->render_attributes( "multi-heading-item-$index" ) . '><' . $this->render_attributes( "multi-heading-item-text-mask-$index" ) . '>' . esc_html( $item['text'] ) . '</span></span>';
 			} else {
-				$output .= '<' . $this->render_attributes( "multi-heading-item-$index" ) . '>' . $item['text'] . '</span>';
+				$output .= '<' . $this->render_attributes( "multi-heading-item-$index" ) . '>' . esc_html( $item['text'] ) . '</span>';
 			}
 
 			// Link.

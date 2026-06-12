@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Bricksable
- * Version: 1.6.83
+ * Version: 1.6.84
  * Plugin URI: https://bricksable.com/
  * Description: Elevate your website game with the Bricksable collection of premium elements for Bricks Builder. Designed to speed up your workflow, our customizable and fully responsive elements will take your website to the next level in no time.
  * Author: Bricksable
  * Author URI: https://bricksable.com/about-us/
  * Requires at least: 5.6
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * License: GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: bricksable
@@ -47,7 +47,7 @@ require_once 'includes/lib/class-persist-admin-notices-dismissal.php';
  * @return object Bricksable
  */
 function bricksable() {
-	$instance = Bricksable::instance( __FILE__, '1.6.83' );
+	$instance = Bricksable::instance( __FILE__, '1.6.84' );
 	define( 'BRICKSABLE_PLUGIN_ASSET_URL', plugins_url( '/assets', __FILE__ ) );
 
 	if ( is_null( $instance->settings ) ) {

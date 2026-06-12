@@ -515,7 +515,7 @@ class Bricksable_Back_To_Top extends \Bricks\Element {
 			$this->set_attribute( 'text', 'class', 'ba-back-to-top-text' );
 			if ( isset( $settings['text'] ) ) {
 				$output .= "<span {$this->render_attributes( 'text' )}>";
-				$output .= $settings['text'];
+				$output .= esc_html( $settings['text'] );
 				$output .= '</span>';
 			}
 		} elseif ( method_exists( '\Bricks\Frontend', 'render_children' ) ) {

@@ -2,8 +2,8 @@
 Contributors: bricksable, kenng87
 Tags: bricks, bricks builder, bricks element
 Requires at least: 5.6
-Tested up to: 6.9
-Stable tag: 1.6.83
+Tested up to: 7.0
+Stable tag: 1.6.84
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -111,6 +111,10 @@ This is a common question that we get asked here every now and then which is why
 **Absolutely, yes!** We're committed to keeping Bricksable Free powerful and relevant. We actively listen to user suggestions and feedback – if it's a great idea that benefits the community, we'll build it. **Your voice matters.** Reach out to us with feature requests, and if we think it's a solid addition, it goes on our roadmap. Together, we're making Bricksable legendary and taking Bricks Builder to the next level! 🚀
 
 == Changelog ==
+= 1.6.84 (2026-06-12) =
+* Security: Fixed stored XSS in multiple elements where plain text and editor control values were output without escaping. Affected elements: Content Toggle, Multi Heading, Icon List, Card, Image Hotspots, Flip Box, Read More, Back to Top, Text Notation, and Scrolling Image. Text and textarea fields now use esc_html(); editor fields use Bricks' parse_editor_content() sanitizer.
+* Fix: Flip Box front-side editor content was appended to the subheading output block instead of the content block.
+
 = 1.6.83 (2026-03-03) =
 * Improve: Compatibility with Bricksable Pro to avoid conflicts with the Lite version.
 

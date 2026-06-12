@@ -1206,7 +1206,7 @@ class Bricksable_Card extends \Bricks\Element {
 			if ( ! empty( $settings['badge'] ) ) {
 				$output .= "<div {$this->render_attributes( 'badge' )}>";
 
-				$output .= $settings['badge'];
+				$output .= esc_html( $settings['badge'] );
 
 				$output .= '</div>';
 			}
@@ -1223,7 +1223,7 @@ class Bricksable_Card extends \Bricks\Element {
 			$output .= "<{$this->tag} {$this->render_attributes( 'title' )}>";
 
 			if ( ! empty( $settings['title'] ) ) {
-				$output .= $settings['title'];
+				$output .= esc_html( $settings['title'] );
 			}
 			$output .= "</{$this->tag}>";
 
@@ -1233,7 +1233,7 @@ class Bricksable_Card extends \Bricks\Element {
 			$output .= "<div {$this->render_attributes( 'subhead' )}>";
 
 			if ( ! empty( $settings['subhead'] ) ) {
-				$output .= $settings['subhead'];
+				$output .= esc_html( $settings['subhead'] );
 			}
 			$output .= '</div>';
 
@@ -1268,7 +1268,7 @@ class Bricksable_Card extends \Bricks\Element {
 				}
 
 				if ( ! empty( $settings['button_text'] ) ) {
-					$output .= trim( $settings['button_text'] );
+					$output .= esc_html( trim( $settings['button_text'] ) );
 				}
 
 				if ( $icon && 'right' === $icon_position ) {

@@ -946,7 +946,7 @@ class Bricksable_Scrolling_Image extends \Bricks\Element {
 		if ( isset( $settings['badge'] ) && true === $settings['badge'] ) {
 			$this->set_attribute( 'badge', 'class', array( 'ba-image-scroller-badge', 'ba-badge' ) );
 			$badge  = "<span {$this->render_attributes('badge')}>";
-			$badge .= $settings['badge_text'];
+			$badge .= esc_html( $settings['badge_text'] );
 			$badge .= '</span>';
 		}
 
