@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Main plugin class.
  */
-class Bricksable {
+if ( ! class_exists( 'Bricksable' ) ) :
+	class Bricksable {
 
 	/**
 	 * The single instance of Bricksable.
@@ -522,3 +523,4 @@ class Bricksable {
 		<?php
 	}
 }
+endif;

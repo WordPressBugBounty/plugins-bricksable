@@ -487,6 +487,7 @@ class Bricksable_Content_Toggle extends \Bricks\Element {
 		$output .= '<' . $this->render_attributes( 'label-wrapper' ) . '>';
 
 		if ( ! $content_toggle_item ) {
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $output . '</div></div>';
 			return;
 		}

@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Settings class.
  */
-class Bricksable_Settings {
+if ( ! class_exists( 'Bricksable_Settings' ) ) :
+	class Bricksable_Settings {
 
 	/**
 	 * The single instance of Bricksable_Settings.
@@ -846,3 +847,4 @@ class Bricksable_Settings {
 		return $exclude_elements;
 	}
 }
+endif;

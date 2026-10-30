@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Uses WP-Cron to batch-process postmeta rows, renaming
  * `content_toggle_item` → `content-toggle-item` inside serialized Bricks element data.
  */
-class Bricksable_Migration {
+if ( ! class_exists( 'Bricksable_Migration' ) ) :
+	class Bricksable_Migration {
 
 	const MIGRATION_VERSION_KEY = 'bricksable_migration_version';
 	const TARGET_VERSION        = '1.6.82';
@@ -319,3 +320,4 @@ class Bricksable_Migration {
 		return $keys;
 	}
 }
+endif;

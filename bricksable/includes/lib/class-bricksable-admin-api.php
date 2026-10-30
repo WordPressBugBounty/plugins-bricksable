@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Admin API class.
  */
-class Bricksable_Admin_API {
+if ( ! class_exists( 'Bricksable_Admin_API' ) ) :
+	class Bricksable_Admin_API {
 
 	/**
 	 * Constructor function
@@ -354,3 +355,4 @@ class Bricksable_Admin_API {
 		}
 	}
 }
+endif;

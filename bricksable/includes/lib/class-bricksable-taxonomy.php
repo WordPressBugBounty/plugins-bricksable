@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Taxonomy functions class.
  */
-class Bricksable_Taxonomy {
+if ( ! class_exists( 'Bricksable_Taxonomy' ) ) :
+	class Bricksable_Taxonomy {
 
 	/**
 	 * The name for the taxonomy.
@@ -140,3 +141,4 @@ class Bricksable_Taxonomy {
 		register_taxonomy( $this->taxonomy, $this->post_types, apply_filters( $this->taxonomy . '_register_args', $args, $this->taxonomy, $this->post_types ) );
 	}
 }
+endif;

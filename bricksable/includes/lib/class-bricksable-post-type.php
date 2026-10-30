@@ -12,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Post type declaration class.
  */
-class Bricksable_Post_Type {
+if ( ! class_exists( 'Bricksable_Post_Type' ) ) :
+	class Bricksable_Post_Type {
 
 	/**
 	 * The name for the custom post type.
@@ -192,3 +193,4 @@ class Bricksable_Post_Type {
 		return $bulk_messages;
 	}
 }
+endif;
